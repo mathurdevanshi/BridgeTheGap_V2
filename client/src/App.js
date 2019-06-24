@@ -1,6 +1,5 @@
 import React from "react";
-import Search from "./pages/Search";
-import Saved from "./pages/Saved";
+import Home from "./pages/Home";
 import Nav from "./components/Nav";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -9,8 +8,7 @@ const App = () => (
     <div>
       <Nav/>
       <Switch>
-        <Route exact path="/" component={Search} />
-        <Route exact path="/saved" component={Saved} />
+        <Route exact path="/" component={Home} />
       </Switch>
     </div>
   </Router>
