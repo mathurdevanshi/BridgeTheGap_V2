@@ -36,9 +36,39 @@ connection.connect(function(err) {
   }
   console.log("connected as id " + connection.threadId);
 });
-/////////////////////////////////////////////////////// AGENCY DISPLAY ALL ITEMS
-app.post("/api/agencySupplyAddItem", function(req, res) {
-  res.json({ Hello: "World" });
+/////////////////////////////////////////////////////// AGENCY INSERT ITEM
+app.post("/api/agencyAddItem/:requestOrSupply", function(req, res) {
+  var sql = "INSERT INTO agencyInventoryManagementDB ";
+  sql +=
+    "(id, fullName, requestOrSupply, category, descriptionOfItem, originalQuantityPlaced, actionZipCode) ";
+  sql += "VALUES ";
+  sql += "(?,?,?,?,?,?,?);";
+  connection.query(
+    sql,
+    [
+      req.body.id,
+      req.body.fullName,
+      req.params.requestOrSupply,
+      req.body.category,
+      req.body.descriptionOfItem,
+      req.body.originalQuantityPlaced,
+      req.body.actionZipCode
+    ],
+    function(err, sqlResult) {
+      if (err) {
+        console.log("THERE IS AN ERROR! WARN THE TROOPS!");
+        throw errl;
+      }
+      var sql = "SELECT * FROM agencyInventoryManagementDB;";
+      connection.query(sql, function(err, sqlResult) {
+        if (err) {
+          console.log("AAAAAHHHH!!! SO. MANY. MISTAKES.");
+          throw err;
+        }
+        res.json(sqlResult);
+      });
+    }
+  );
 });
 
 app.listen(PORT, function() {
