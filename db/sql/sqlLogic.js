@@ -37,20 +37,24 @@ connection.connect(function(err) {
   console.log("connected as id " + connection.threadId);
 });
 /////////////////////////////////////////////////////// AGENCY INSERT ITEM
-app.post("/api/agencyAddItem/:requestOrSupply", function(req, res) {
+app.post("/api/agencyAddItem/:fullName/:id/:requestOrSupply", function(
+  req,
+  res
+) {
   var sql = "INSERT INTO agencyInventoryManagementDB ";
   sql +=
-    "(id, fullName, requestOrSupply, category, descriptionOfItem, originalQuantityPlaced, actionZipCode) ";
+    "(id, fullName, requestOrSupply, category, descriptionOfItem, originalQuantityPlaced, currentQuantity,actionZipCode) ";
   sql += "VALUES ";
-  sql += "(?,?,?,?,?,?,?);";
+  sql += "(?,?,?,?,?,?,?,?);";
   connection.query(
     sql,
     [
-      req.body.id,
-      req.body.fullName,
+      req.params.id,
+      req.params.fullName,
       req.params.requestOrSupply,
       req.body.category,
       req.body.descriptionOfItem,
+      req.body.originalQuantityPlaced,
       req.body.originalQuantityPlaced,
       req.body.actionZipCode
     ],
@@ -69,6 +73,41 @@ app.post("/api/agencyAddItem/:requestOrSupply", function(req, res) {
       });
     }
   );
+});
+
+/////////////////////////////////////////////////////// AGENCY SHOW ALL ITEMS
+
+app.post("/api/agencyShowItems/:fullName/:id/:requestOrSupply", function(
+  req,
+  res
+) {
+  var sql =
+    "SELECT actionCreatedAt, category, descriptionOfItem, currentQuantity, actionZipCode ";
+  sql += "FROM agencyInventoryManagementDB ";
+  sql +=
+    "WHERE id = " +
+    req.params.id +
+    ", fullName= '" +
+    req.params.fullName +
+    "', requestOrSupply= " +
+    req.params.requestOrSupply +
+    ",";
+  sql += "ORDER BY actionCreatedAt, category;";
+  console.log("Here is the sql statement: ", sql);
+  connection.query(sql, function(err, sqlResult) {
+    if (err) {
+      console.log("THERE IS AN ERROR! WARN THE TROOPS!");
+      throw err;
+    }
+    var sql = "SELECT * FROM agencyInventoryManagementDB;";
+    connection.query(sql, function(err, sqlResult) {
+      if (err) {
+        console.log("AAAAAHHHH!!! SO. MANY. MISTAKES.");
+        throw err;
+      }
+      res.json(sqlResult);
+    });
+  });
 });
 
 app.listen(PORT, function() {
