@@ -85,31 +85,59 @@ app.post("/api/agencyShowItems/:fullName/:id/:requestOrSupply", function(
     "SELECT actionCreatedAt, category, descriptionOfItem, currentQuantity, actionZipCode ";
   sql += "FROM agencyInventoryManagementDB ";
   sql +=
-    "WHERE id = " +
+    "WHERE (id = " +
     req.params.id +
-    ", fullName= '" +
+    " AND fullName= '" +
     req.params.fullName +
-    "', requestOrSupply= " +
+    "' AND requestOrSupply= '" +
     req.params.requestOrSupply +
-    ",";
+    "')";
   sql += "ORDER BY actionCreatedAt, category;";
-  console.log("Here is the sql statement: ", sql);
   connection.query(sql, function(err, sqlResult) {
     if (err) {
       console.log("THERE IS AN ERROR! WARN THE TROOPS!");
       throw err;
     }
-    var sql = "SELECT * FROM agencyInventoryManagementDB;";
+    res.json(sqlResult);
+  });
+});
+
+/////////////////////////////////////////////////////// INCREMENT/DECREMENT BUTTON
+app.post(
+  "/api/updateAgency/:operator/:agencyActionId/:id/:requestOrSupply",
+  function(req, res) {
+    if (req.params.operator == "increase") {
+      sql = "UPDATE agencyInventoryManagementDB ";
+      sql += "SET currentQuantity =  (currentQuantity+1) ";
+      sql += "WHERE (agencyActionId = " + req.params.agencyActionId;
+      sql +=
+        " AND id =" +
+        req.params.id +
+        " AND requestOrSupply='" +
+        req.params.requestOrSupply +
+        "');";
+    }
+    if (req.params.operator == "decrease") {
+      sql = "UPDATE agencyInventoryManagementDB ";
+      sql += "SET currentQuantity =  (currentQuantity-1) ";
+      sql += "WHERE (agencyActionId = " + req.params.agencyActionId;
+      sql +=
+        " AND id =" +
+        req.params.id +
+        " AND requestOrSupply='" +
+        req.params.requestOrSupply +
+        "');";
+    }
     connection.query(sql, function(err, sqlResult) {
       if (err) {
-        console.log("AAAAAHHHH!!! SO. MANY. MISTAKES.");
+        console.log("THERE IS AN ERROR! WARN THE TROOPS!");
         throw err;
       }
       res.json(sqlResult);
     });
-  });
-});
-
+  }
+);
+/////////////////////////////////////////////////////// LISTENING TO PORT
 app.listen(PORT, function() {
   console.log("Server listening on: http://localhost:" + PORT);
 });
