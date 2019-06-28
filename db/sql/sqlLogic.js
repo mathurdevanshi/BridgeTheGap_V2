@@ -107,7 +107,7 @@ app.post(
   "/api/updateAgency/:operator/:agencyActionId/:id/:requestOrSupply",
   function(req, res) {
     if (req.params.operator == "increase") {
-      sql = "UPDATE agencyInventoryManagementDB ";
+      var sql = "UPDATE agencyInventoryManagementDB ";
       sql += "SET currentQuantity =  (currentQuantity+1) ";
       sql += "WHERE (agencyActionId = " + req.params.agencyActionId;
       sql +=
@@ -118,7 +118,7 @@ app.post(
         "');";
     }
     if (req.params.operator == "decrease") {
-      sql = "UPDATE agencyInventoryManagementDB ";
+      var sql = "UPDATE agencyInventoryManagementDB ";
       sql += "SET currentQuantity =  (currentQuantity-1) ";
       sql += "WHERE (agencyActionId = " + req.params.agencyActionId;
       sql +=
@@ -128,6 +128,30 @@ app.post(
         req.params.requestOrSupply +
         "');";
     }
+    connection.query(sql, function(err, sqlResult) {
+      if (err) {
+        console.log("THERE IS AN ERROR! WARN THE TROOPS!");
+        throw err;
+      }
+      res.json(sqlResult);
+    });
+  }
+);
+/////////////////////////////////////////////////////// PERSON ASSIGNED TO AGENCY ACTION
+app.post(
+  "/api/assignToAgencyAction/:personAssignedID/:personAssignedQuantity/:agencyActionID/:requestOrSupply",
+  function(req, res) {
+    sql = "UPDATE agencyInventoryManagementDB ";
+    sql += "SET personAssignedID = " + req.params.personAssignedID + ", ";
+    sql +=
+      "personAssignedQuantity = " + req.params.personAssignedQuantity + " ";
+    sql +=
+      "WHERE agencyActionID = " +
+      req.params.agencyActionID +
+      " AND requestOrSupply = '" +
+      req.params.requestOrSupply +
+      "';";
+    console.log("Here is the SQL statement: ", sql);
     connection.query(sql, function(err, sqlResult) {
       if (err) {
         console.log("THERE IS AN ERROR! WARN THE TROOPS!");
