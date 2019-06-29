@@ -128,6 +128,7 @@ app.post(
         req.params.requestOrSupply +
         "');";
     }
+    console.log("HERE IS THE SQL STATEMENT: ", sql);
     connection.query(sql, function(err, sqlResult) {
       if (err) {
         console.log("THERE IS AN ERROR! WARN THE TROOPS!");
@@ -139,19 +140,21 @@ app.post(
 );
 /////////////////////////////////////////////////////// PERSON ASSIGNED TO AGENCY ACTION
 app.post(
-  "/api/assignToAgencyAction/:personAssignedID/:personAssignedQuantity/:agencyActionID/:requestOrSupply",
+  "/api/assignToAgencyAction/:personAssignedID/:personAssignedQuantity/:agencyActionID/:/:requestOrSupply",
   function(req, res) {
     sql = "UPDATE agencyInventoryManagementDB ";
     sql += "SET personAssignedID = " + req.params.personAssignedID + ", ";
+    sql += " personAssignedTimeOfAction= UTC_TIMESTAMP(), ";
     sql +=
-      "personAssignedQuantity = " + req.params.personAssignedQuantity + " ";
+      "personAssignedQuantity = " + req.params.personAssignedQuantity + ", ";
+    sql += " currentQuantity = (currentQuantity-personAssignedQuantity) ";
     sql +=
       "WHERE agencyActionID = " +
       req.params.agencyActionID +
       " AND requestOrSupply = '" +
       req.params.requestOrSupply +
       "';";
-    console.log("Here is the SQL statement: ", sql);
+    console.log(sql);
     connection.query(sql, function(err, sqlResult) {
       if (err) {
         console.log("THERE IS AN ERROR! WARN THE TROOPS!");
@@ -161,6 +164,9 @@ app.post(
     });
   }
 );
+
+/////////////////////////////////////////////////////// SHOW OVERLAP OF HOMELESS/VOLUNTEER AND AGENCY
+
 /////////////////////////////////////////////////////// LISTENING TO PORT
 app.listen(PORT, function() {
   console.log("Server listening on: http://localhost:" + PORT);

@@ -29,6 +29,7 @@ CREATE  TABLE agencyInventoryManagementDB(
     actionZipCode varchar (50), 
     personAssignedID int (100), 
     personAssignedQuantity int (10),
+    personAssignedTimeOfAction datetime,
     PRIMARY KEY (agencyActionId)
 );
 
@@ -45,17 +46,6 @@ CREATE TABLE homelessInformationDB(
     userPassword varchar (100)
 );
 
-CREATE  TABLE homelessInventoryManagementDB(
-    id int NOT NULL, 
-    fullName varchar (90), 
-    actionCreatedAt datetime NOT NULL default CURRENT_TIMESTAMP, 
-    requestOrSupply varchar (15),
-    accountType varchar (20),  
-    category varchar (60), 
-    agencyActionId int (100),
-    personAssignedQuantity int (100)
-);
-
 -- VOLUNTEER TABLES
 CREATE TABLE volunteerInformationDB(
     id int NOT NULL, 
@@ -70,15 +60,3 @@ CREATE TABLE volunteerInformationDB(
     username varchar (100),
     userPassword varchar (90)
 );
-
-CREATE TABLE volunteerInventoryManagementDB(
-    id int NOT NULL, 
-    fullName varchar (90), 
-    actionCreatedAt datetime NOT NULL default CURRENT_TIMESTAMP, 
-    requestOrSupply varchar (15),
-    accountType varchar (20),  
-    category varchar (60), 
-    agencyActionId int (100),
-    personAssignedQuantity int (100)
-);
-
