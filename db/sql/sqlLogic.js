@@ -1,13 +1,8 @@
 ///////////////////////////////////////////////////GETTING NEEDED PACKGES AND SAVING THEM
-var http = require("http");
-var fs = require("fs");
 var express = require("express");
 var app = express();
 var PORT = process.env.PORT || 8080;
 var mysql = require("mysql");
-const path = require("path");
-const router = express.Router();
-
 app.use(express.json());
 var bodyParser = require("body-parser");
 app.use(
@@ -102,6 +97,35 @@ app.post("/api/agencyShowItems/:fullName/:id/:requestOrSupply", function(
   });
 });
 
+/////////////////////////////////////////////////////// AGENCY SHOW ALL ITEMS FOR HOMELESS AND VOLUNTEER (CURRENTQUANTITY>0)
+
+app.post("/api/agencyShowItemsClient/:fullName/:id/:requestOrSupply", function(
+  req,
+  res
+) {
+  var sql =
+    "SELECT actionCreatedAt, category, descriptionOfItem, currentQuantity, actionZipCode ";
+  sql += "FROM agencyInventoryManagementDB ";
+  sql +=
+    "WHERE (id = " +
+    req.params.id +
+    " AND fullName= '" +
+    req.params.fullName +
+    "' AND currentQuantity>0 " +
+    " AND requestOrSupply= '" +
+    req.params.requestOrSupply +
+    "')";
+  sql += "ORDER BY actionCreatedAt, category;";
+  console.log("HERE IS THE SQL STATEMENT: ", sql);
+  connection.query(sql, function(err, sqlResult) {
+    if (err) {
+      console.log("THERE IS AN ERROR! WARN THE TROOPS!");
+      throw err;
+    }
+    res.json(sqlResult);
+  });
+});
+
 /////////////////////////////////////////////////////// INCREMENT/DECREMENT BUTTON
 app.post(
   "/api/updateAgency/:operator/:agencyActionId/:id/:requestOrSupply",
@@ -165,7 +189,89 @@ app.post(
   }
 );
 
-/////////////////////////////////////////////////////// SHOW OVERLAP OF HOMELESS/VOLUNTEER AND AGENCY
+/////////////////////////////////////////////////////// SHOW VOLUNTEERS COMMITED FOR AGENCY
+app.post("/api/agencyVolunteerDisplayAll/:id", function(req, res) {
+  sql =
+    "SELECT volunteerInformationDB.fullName, volunteerInformationDB.phoneNumber, agencyInventoryManagementDB.category, agencyInventoryManagementDB.descriptionOfItem, agencyInventoryManagementDB.personAssignedQuantity ";
+  sql += "FROM agencyInventoryManagementDB ";
+  sql +=
+    "INNER JOIN volunteerInformationDB ON agencyInventoryManagementDB.personAssignedID = volunteerInformationDB.id ";
+  sql +=
+    "WHERE (agencyInventoryManagementDB.requestOrSupply = 'request' AND agencyInventoryManagementDB.id =" +
+    req.params.id +
+    ");";
+  console.log("Here is the sql statement: ", sql);
+  connection.query(sql, function(err, sqlResult) {
+    if (err) {
+      console.log("THERE IS AN ERROR! WARN THE TROOPS!");
+      throw err;
+    }
+    res.json(sqlResult);
+  });
+});
+
+/////////////////////////////////////////////////////// SHOW HOMELESS COMMITED FOR AGENCY
+app.post("/api/agencyHomelessDisplayAll/:id", function(req, res) {
+  sql =
+    "SELECT homelessInformationDB.fullName, agencyInventoryManagementDB.category, agencyInventoryManagementDB.descriptionOfItem, agencyInventoryManagementDB.personAssignedQuantity ";
+  sql += "FROM agencyInventoryManagementDB ";
+  sql +=
+    "INNER JOIN homelessInformationDB ON agencyInventoryManagementDB.personAssignedID = homelessInformationDB.id ";
+  sql +=
+    "WHERE (agencyInventoryManagementDB.requestOrSupply = 'supply' AND agencyInventoryManagementDB.id =" +
+    req.params.id +
+    ");";
+  console.log("Here is the sql statement: ", sql);
+  connection.query(sql, function(err, sqlResult) {
+    if (err) {
+      console.log("THERE IS AN ERROR! WARN THE TROOPS!");
+      throw err;
+    }
+    res.json(sqlResult);
+  });
+});
+
+///////////////////////////////////////////////////////DELETE AGENCY ITEM
+app.post("/api/deleteItemAgency/:id/:actionId", function(req, res) {
+  sql =
+    "DELETE FROM agencyInventoryManagementDB WHERE (id = " +
+    req.params.id +
+    " AND agencyActionId = " +
+    req.params.actionId +
+    " );";
+  console.log("Here is the sql statement: ", sql);
+  connection.query(sql, function(err, sqlResult) {
+    if (err) {
+      console.log("THERE IS AN ERROR! WARN THE TROOPS!");
+      throw err;
+    }
+    res.json(sqlResult);
+  });
+});
+
+/////////////////////////////////////////////////////// RETURN TO STOCK
+app.post("/api/returnToStock/:id/:agencyActionId/:personAssignedId", function(
+  req,
+  res
+) {
+  sql =
+    "UPDATE agencyInventoryManagementDB SET currentQuantity = (currentQuantity + personAssignedQuantity) " +
+    "WHERE (id = " +
+    req.params.id +
+    " AND agencyActionId = " +
+    req.params.agencyActionId +
+    " AND personAssignedId = " +
+    req.params.personAssignedId +
+    ");";
+  console.log("Here is the sql statement: ", sql);
+  connection.query(sql, function(err, sqlResult) {
+    if (err) {
+      console.log("THERE IS AN ERROR! WARN THE TROOPS!");
+      throw err;
+    }
+    res.json(sqlResult);
+  });
+});
 
 /////////////////////////////////////////////////////// LISTENING TO PORT
 app.listen(PORT, function() {
