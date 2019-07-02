@@ -210,10 +210,36 @@ app.post("/api/agencyVolunteerDisplayAll/:id", function(req, res) {
   });
 });
 
+/////////////////////////////////////////////////////// SHOW VOLUNTEERS COMMITED FOR AGENCY FROM VOLUNTEER'S PERSPECTIVE
+app.post("/api/volunteerAgencyDisplayAll/:personAssignedID", function(
+  req,
+  res
+) {
+  sql =
+    "SELECT agencyInventoryManagementDB.fullName, agencyInformationDB.phoneNumber, agencyInventoryManagementDB.category, agencyInventoryManagementDB.descriptionOfItem, agencyInventoryManagementDB.personAssignedQuantity ";
+  sql += "FROM agencyInventoryManagementDB ";
+  sql +=
+    "INNER JOIN volunteerInformationDB ON agencyInventoryManagementDB.personAssignedID = volunteerInformationDB.id ";
+  sql +=
+    "INNER JOIN agencyInventoryManagementDB ON agencyInventoryManagementDB.id = agencyInformationDB.id";
+  sql +=
+    "WHERE (agencyInventoryManagementDB.requestOrSupply = 'request' AND agencyInventoryManagementDB.personAssignedID =" +
+    req.params.personAssignedID +
+    ");";
+  console.log("Here is the sql statement: ", sql);
+  connection.query(sql, function(err, sqlResult) {
+    if (err) {
+      console.log("THERE IS AN ERROR! WARN THE TROOPS!");
+      throw err;
+    }
+    res.json(sqlResult);
+  });
+});
+
 /////////////////////////////////////////////////////// SHOW HOMELESS COMMITED FOR AGENCY
 app.post("/api/agencyHomelessDisplayAll/:id", function(req, res) {
   sql =
-    "SELECT homelessInformationDB.fullName, agencyInventoryManagementDB.category, agencyInventoryManagementDB.descriptionOfItem, agencyInventoryManagementDB.personAssignedQuantity ";
+    "SELECT homelessInformationDB.fullName, agencyInventoryManagementDB.category, agencyInventoryManagementDB.descriptionOfItem, agencyInventoryManagementDB.personAssignedQuantity, agencyInventoryManagementDB.currentQuantity ";
   sql += "FROM agencyInventoryManagementDB ";
   sql +=
     "INNER JOIN homelessInformationDB ON agencyInventoryManagementDB.personAssignedID = homelessInformationDB.id ";
