@@ -30,7 +30,7 @@ connection.connect(function(err) {
 
   for (let index = 0; index < 50; index++) {
     //generating fake data for agency
-    id = parseInt(Math.random() * 10000000);
+    id = parseInt(Math.random() * 1000000000000);
     fullName = faker.company.companyName();
     accountType = "agency";
     email = faker.internet.email();
