@@ -1,4 +1,5 @@
 import React from "react";
+import Home from "./pages/Home"
 import Register from "./pages/Resgister";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
@@ -10,10 +11,10 @@ const App = () => (
     <div>
       <Nav/>
       <Switch>
-        {/* <Route exact path="/" component={Home} /> */}
+        <Route exact path="/" component={Home} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
-        <Route exact path="/dasboard" component={Dashboard} />
+        <Route exact path="/dashboard" component={Dashboard} />
       </Switch>
     </div>
   </Router>

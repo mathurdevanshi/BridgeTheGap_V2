@@ -8,6 +8,9 @@ const privateKey = fs.readFileSync("private.key");
 
 // Defining methods for the booksController
 module.exports = {
+  testConnection: () => {
+    console.log("testing connection");
+  },
 
   registerUser: function(req, res) {
     let username = req.body.username;
@@ -25,23 +28,23 @@ module.exports = {
             console.log(err);
           } else {
 
-            let newUser = {
-              username: username,
-              password: hash
-            }
-  
-            userOrm.saveUser(newUser)
+              let newUser = {
+                username: username,
+                password: hash
+              };
+              // Save user 
+              userOrm.saveUser(newUser);
 
-            
-            jwt.sign({ user: newUser }, privateKey, { expiresIn: "2h" }, (error, token) => {
-              console.log("token is being created and sent");
-              res.json({
-              token: token
+              
+              jwt.sign({ user: newUser }, privateKey, { expiresIn: "2h" }, (error, token) => {
+                console.log("token is being created and sent");
+                res.json({
+                  token: token
+                });
               });
-            })
-            }
-        })
-      }
+            };
+        });
+      };
     });
     console.log(username, password);
   },
@@ -62,30 +65,17 @@ module.exports = {
           console.log("User has been authorized");
           jwt.sign({user: authUser[0].username}, privateKey, { expiresIn: "2h" }, (error, token) => {
             console.log("token is being created");
+
             res.json({
               token: token
-            })
-
+            });
+            
           });
           
         } else {
           console.log("Users creds don't match");
-        }
+        };
       });
     });
   }
 };
-
-// jwt.sign({
-//   data: "here is some data"
-// }, privateKey, {expiresIn: "1h", algorithm: "HS256"}, (err, token) => {
-
-//   if (err) {
-//     console.log(err);
-//   } else {
-
-//     console.log(token);
-
-//     res.send(token);
-//   }
-// })

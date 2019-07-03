@@ -5,12 +5,15 @@ import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
 // import { List, ListItem } from "../components/List";
 import { Input, FormBtn } from "../components/Form";
+import { Redirect } from "react-router-dom";
 
-class Books extends Component {
+
+class Login extends Component {
 
   state = {
     username: "",
     password: "",
+    redirect: false,
   };
 
   onChange(event) {
@@ -22,7 +25,24 @@ class Books extends Component {
     });
   }
 
-  searchBooks = (event) => {
+  setRedirect = () => {
+    console.log("setting redirect");
+
+    this.setState({
+      redirect: true
+    });
+  }
+ 
+  renderRedirect = () => {
+    console.log("checking redirect");
+
+    if (this.state.redirect) {
+      console.log("if statement is being reached");
+      return <Redirect to="/" />
+    }
+  }
+
+  loginUser = (event) => {
     event.preventDefault();
 
     const username = this.state.username;
@@ -42,7 +62,13 @@ class Books extends Component {
       localStorage.setItem("jwt", JSON.stringify(token));
 
       let retrievedToken = localStorage.getItem("jwt");
-      console.log(retrievedToken);
+
+      if (retrievedToken) {
+        this.setRedirect();
+      }
+      console.log(JSON.parse(retrievedToken));
+      
+
     })
     .catch((err) => {
       console.log(err);
@@ -60,7 +86,7 @@ class Books extends Component {
             <form>
               <Input onChange={this.onChange.bind(this)} name="username" placeholder="username (required)" />
               <Input onChange={this.onChange.bind(this)} name="password" placeholder="password" type="password"/>
-              <FormBtn onClick={this.searchBooks} >Submit Book</FormBtn>
+              <FormBtn onClick={this.loginUser} >Submit Book</FormBtn>
             </form>
           </Col>
         </Row>
@@ -69,6 +95,5 @@ class Books extends Component {
   }
 }
 
-export default Books;
+export default Login;
 
-// key={book._id} for line 77

@@ -20,7 +20,7 @@ class Books extends Component {
     });
   }
 
-  searchBooks = (event) => {
+  resisgerUser = (event) => {
     event.preventDefault();
 
     const username = this.state.username;
@@ -56,7 +56,7 @@ class Books extends Component {
             <form>
               <Input onChange={this.onChange.bind(this)} name="username" placeholder="username (required)" />
               <Input onChange={this.onChange.bind(this)} name="password" placeholder="password" type="password"/>
-              <FormBtn onClick={this.searchBooks} >Submit Book</FormBtn>
+              <FormBtn onClick={this.resisgerUser} >Submit Book</FormBtn>
             </form>
           </Col>
         </Row>

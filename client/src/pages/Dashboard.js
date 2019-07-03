@@ -7,9 +7,12 @@ import { Input, FormBtn } from "../components/Form";
 class Dasboard extends Component {
 
   state = {
-    username: "",
-    password: "",
+    authenticated: false
   };
+
+  componentDidMount() {
+    console.log("component is mounting");
+  }
 
   onChange(event) {
     const name = event.target.name;
@@ -18,29 +21,29 @@ class Dasboard extends Component {
     this.setState({
       [name]: value
     });
-  }
+  };
 
 
   render() {
-    return (
-      <Container fluid>
-        <Row>
-          <Col size="lg-12 md-6">
-            <Jumbotron>
-              <h1>Dashboard page</h1>
-            </Jumbotron>
-            <form>
-              <Input onChange={this.onChange.bind(this)} name="username" placeholder="username (required)" />
-              <Input onChange={this.onChange.bind(this)} name="password" placeholder="password" type="password"/>
-              <FormBtn onClick={this.searchBooks} >Submit Book</FormBtn>
-            </form>
-          </Col>
-        </Row>
-      </Container>
-    );
+    if (this.state.authenticated) {
+      return (
+        <Container fluid>
+          <Row>
+            <Col size="lg-12 md-6">
+              <Jumbotron>
+                <h1>Dashboard page</h1>
+              </Jumbotron>
+            </Col>
+          </Row>
+        </Container>
+      );
+    } else {
+      return(
+        <h1>You are not authenticated</h1>
+      )
+    }
   }
 }
 
 export default Dasboard;
 
-// key={book._id} for line 77
