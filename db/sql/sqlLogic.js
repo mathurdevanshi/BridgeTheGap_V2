@@ -31,6 +31,127 @@ connection.connect(function(err) {
   }
   console.log("connected as id " + connection.threadId);
 });
+
+/////////////////////////////////////////////////////// CREATE NEW ACCOUNT - AGENCY
+app.post("/api/createNewAgencyAccount/", function(req, res) {
+  var sql = "INSERT INTO agencyInformationDB ";
+  sql +=
+    "(id, fullName, accountType, email, phoneNumber, streetName, city, zipCode, stateName, username, userPassword) ";
+  sql += "VALUES ";
+  sql += "(?,?,?,?,?,?,?,?,?,?,?);";
+  var id = parseInt(Math.random() * 10000000);
+  connection.query(
+    sql,
+    [
+      id,
+      req.body.fullName,
+      "agency",
+      req.body.email,
+      req.body.phoneNumber,
+      req.body.streetName,
+      req.body.city,
+      req.body.zipCode,
+      req.body.stateName,
+      req.body.username,
+      req.body.userPassword
+    ],
+    function(err, sqlResult) {
+      if (err) {
+        console.log("THERE IS AN ERROR! WARN THE TROOPS!");
+        throw errl;
+      }
+      var sql = "SELECT * FROM agencyInventoryManagementDB;";
+      connection.query(sql, function(err, sqlResult) {
+        if (err) {
+          console.log("AAAAAHHHH!!! SO. MANY. MISTAKES.");
+          throw err;
+        }
+        res.json(sqlResult);
+      });
+    }
+  );
+});
+
+/////////////////////////////////////////////////////// CREATE NEW ACCOUNT - VOLUNTEER
+app.post("/api/createNewVolunteerAccount/", function(req, res) {
+  var sql = "INSERT INTO volunteerInformationDB ";
+  sql +=
+    "(id, fullName, accountType, email, phoneNumber, streetName, city, zipCode, stateName, username, userPassword) ";
+  sql += "VALUES ";
+  sql += "(?,?,?,?,?,?,?,?,?,?,?);";
+  var id = parseInt(Math.random() * 10000000);
+  connection.query(
+    sql,
+    [
+      id,
+      req.body.fullName,
+      "volunteer",
+      req.body.email,
+      req.body.phoneNumber,
+      req.body.streetName,
+      req.body.city,
+      req.body.zipCode,
+      req.body.stateName,
+      req.body.username,
+      req.body.userPassword
+    ],
+    function(err, sqlResult) {
+      if (err) {
+        console.log("THERE IS AN ERROR! WARN THE TROOPS!");
+        throw errl;
+      }
+      var sql = "SELECT * FROM agencyInventoryManagementDB;";
+      connection.query(sql, function(err, sqlResult) {
+        if (err) {
+          console.log("AAAAAHHHH!!! SO. MANY. MISTAKES.");
+          throw err;
+        }
+        res.json(sqlResult);
+      });
+    }
+  );
+});
+
+/////////////////////////////////////////////////////// CREATE NEW ACCOUNT - HOMELESS
+app.post("/api/createNewHomelessAccount/", function(req, res) {
+  var sql = "INSERT INTO homelessInformationDB ";
+  sql +=
+    "(id, fullName, accountType, email, phoneNumber, zipCode, stateName, username, userPassword) ";
+  sql += "VALUES ";
+  sql += "(?,?,?,?,?,?,?,?,?);";
+  var id = parseInt(Math.random() * 10000000);
+  connection.query(
+    sql,
+    [
+      id,
+      req.body.fullName,
+      "homeless",
+      req.body.email,
+      req.body.phoneNumber,
+      req.body.streetName,
+      req.body.city,
+      req.body.zipCode,
+      req.body.stateName,
+      req.body.username,
+      req.body.userPassword
+    ],
+    function(err, sqlResult) {
+      if (err) {
+        console.log("THERE IS AN ERROR! WARN THE TROOPS!");
+        throw errl;
+      }
+      var sql = "SELECT * FROM agencyInventoryManagementDB;";
+      connection.query(sql, function(err, sqlResult) {
+        if (err) {
+          console.log("AAAAAHHHH!!! SO. MANY. MISTAKES.");
+          throw err;
+        }
+        res.json(sqlResult);
+      });
+    }
+  );
+});
+
 /////////////////////////////////////////////////////// AGENCY INSERT ITEM
 app.post("/api/agencyAddItem/:fullName/:id/:requestOrSupply", function(
   req,
