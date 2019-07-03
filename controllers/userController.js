@@ -6,47 +6,82 @@ const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const privateKey = fs.readFileSync("private.key");
 
-// Defining methods for the booksController
+// Defining methods for the userController
 module.exports = {
-  testConnection: () => {
-    console.log("testing connection");
-  },
+  registerClient: (req, res) => {
+    let newClient = req.body;
+    newClient.id = parseInt(Math.random() * 10000000);
 
-  registerUser: function(req, res) {
-    let username = req.body.username;
-    let password = req.body.password;
+    console.log(newClient);
     let saltRounds = 10;
     
     bcrypt.genSalt(saltRounds, function(err, salt) {
       if (err) {
         console.log(err);
       } else {
-
-        bcrypt.hash(password, salt, function(err, hash) {
+        
+        bcrypt.hash(newClient.password, salt, function(err, hash) {
 
           if (err) {
             console.log(err);
           } else {
+              newClient.password = hash;
 
-              let newUser = {
-                username: username,
-                password: hash
+              let userId = {
+                userId: newClient.id,
               };
               // Save user 
-              userOrm.saveUser(newUser);
+              userOrm.saveClient(newClient);
 
-              
-              jwt.sign({ user: newUser }, privateKey, { expiresIn: "2h" }, (error, token) => {
+              jwt.sign({ user: userId }, privateKey, { expiresIn: "2h" }, (error, token) => {
                 console.log("token is being created and sent");
                 res.json({
                   token: token
                 });
               });
+              
             };
         });
       };
     });
-    console.log(username, password);
+  },
+
+  registerUser: function(req, res) {
+    let newUser = req.body;
+    newUser.id = parseInt(Math.random() * 10000000);
+    console.log(newUser);
+
+    let saltRounds = 10;
+    
+    bcrypt.genSalt(saltRounds, function(err, salt) {
+      if (err) {
+        console.log(err);
+      } else {
+        
+        bcrypt.hash(newUser.password, salt, function(err, hash) {
+
+          if (err) {
+            console.log(err);
+          } else {
+              newUser.password = hash;
+
+              let userId = {
+                userId: newUser.id,
+              };
+              // Save user 
+              userOrm.saveUser(newUser);
+
+              jwt.sign({ user: userId }, privateKey, { expiresIn: "2h" }, (error, token) => {
+                console.log("token is being created and sent");
+                res.json({
+                  token: token
+                });
+              });
+              
+            };
+        });
+      };
+    });
   },
 
   loginUser: function(req, res) {

@@ -1,13 +1,16 @@
 import axios from "axios";
 
 export default {
+    // Saves users in databse
+    registerClient: (newClient) => {
+        return axios.post("/api/users/client", newClient);
+    },
 
-  // Saves users in database
-  registerUser: function(newUser) {
-    return axios.post("/api/users/register", newUser);
-  },
+    registerUser: (newUser) => {
+        return axios.post("/api/users/register", newUser);
+    },
 
-  loginUser: function(user) {
-    return axios.post("/api/users/login", user);
-  }
-};
+    loginUser: (user) => {
+        return axios.post("/api/users/login", user);
+    }
+}
