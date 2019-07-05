@@ -77,7 +77,7 @@ let ormObject = {
     },
 
     findUser: (req, callback) => {
-        let query = "SELECT * FROM user WHERE username = ?;"
+        let query = "SELECT id FROM user WHERE username = ?;"
 
         connection.query(query, [req], function(err, result) {
             if (err) {

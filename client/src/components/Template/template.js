@@ -10,7 +10,6 @@ class Template extends Component {
     return (
       <div className="TemplateContainer">
         <div className="background">
-          {/* <NavBar /> */}
           {this.props.children}
         </div>
       </div>

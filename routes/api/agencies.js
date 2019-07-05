@@ -2,7 +2,7 @@ const router = require("express").Router();
 const data = require("../../controllers/dataController");
 
 // Matches with "/api/agencies"
-router.route("/dashboard")
-.post(data.test);
+router.route("/test")
+.post(data.checkIfAuthorizedGrabData);
 
 module.exports = router;
