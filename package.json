@@ -1,6 +1,10 @@
 {
   "name": "bridge-the-gap",
   "version": "1.0.0",
+  "engines": {
+    "node": "12.5.0",
+    "npm": "6.10.0"
+  },
   "description": "",
   "main": "server.js",
   "scripts": {
