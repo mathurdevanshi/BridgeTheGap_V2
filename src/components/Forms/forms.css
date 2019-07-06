@@ -1,0 +1,21 @@
+.form-container {
+  width: 66vw;
+  color: white;
+  margin-left: 200px;
+  margin-top: 50px;
+  padding: 10px;
+  background-color:rgb(31, 30, 30);
+  opacity: .8;
+}
+
+label {
+  margin-right: 10px;
+}
+
+h3 {
+  color: rgb(17, 194, 194);
+}
+
+hr {
+  color: rgb(17, 194, 194);
+}
