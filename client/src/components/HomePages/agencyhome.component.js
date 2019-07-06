@@ -61,14 +61,16 @@ class AgencyComponent extends React.Component{
   
   state = {
     classes : useStyles,
-    authorized : false
+    authorized : false,
+    agencyData : undefined,
+
   }
 
   componentDidMount() {
     let token = localStorage.getItem("jwt");
 
     let tokenObject =  {
-      test: token
+      authorized: token
     };
 
     console.log(token);
@@ -76,6 +78,8 @@ class AgencyComponent extends React.Component{
     API.checkUsersToken(tokenObject)
     .then((res) => {
       console.log(res);
+      this.setState(res);
+      console.log("agency data" ,this.state.agencyData);
     })
     .catch((err) => {
       console.log(err);

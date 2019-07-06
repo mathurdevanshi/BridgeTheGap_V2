@@ -4,15 +4,15 @@ const connection = require("./connection");
 
 let ormObject = {
     saveClient: (req,res) => {
-        let query= "INSERT INTO homelessinformationdb ";
-        query += "(id, fullname, accountType, email, phoneNumber, zipCode, stateName, username, userPassword) ";
-        query += "VALUES ";
-        query += "(?,?,?,?,?,?,?,?,?);";
+        let queryString= "INSERT INTO homelessinformationdb ";
+        queryString += "(id, fullname, accountType, email, phoneNumber, zipCode, stateName, username, userPassword) ";
+        queryString += "VALUES ";
+        queryString += "(?,?,?,?,?,?,?,?,?);";
         
         let fullName = req.firstname + " " + req.lastname;
 
         connection.query(
-            query, 
+            queryString, 
             [
                 req.id,
                 fullName,
@@ -35,23 +35,23 @@ let ormObject = {
     },
 
     saveUser: (req, res) => {
-        let query= "INSERT INTO ";
+        let queryString= "INSERT INTO ";
         console.log(req);
 
         if (req.category === "agency") {
 
-            query += "agencyinformationdb ";
+            queryString += "agencyinformationdb ";
 
         } else if (req.category === "volunteer") {
 
-            query += "volunteerinformationdb"
+            queryString += "volunteerinformationdb"
 
         };
 
-        query += "(id, fullName, accountType, email, phoneNumber, streetName, city, zipCode, stateName, username, userPassword) ";
-        query +="VALUES (?,?,?,?,?,?,?,?,?,?,?);";
+        queryString += "(id, fullName, accountType, email, phoneNumber, streetName, city, zipCode, stateName, username, userPassword) ";
+        queryString +="VALUES (?,?,?,?,?,?,?,?,?,?,?);";
         
-        connection.query(query,
+        connection.query(queryString,
             [ 
               req.id,
               req.name,
@@ -77,9 +77,9 @@ let ormObject = {
     },
 
     findUser: (req, callback) => {
-        let query = "SELECT id FROM user WHERE username = ?;"
+        let queryString = "SELECT id FROM user WHERE username = ?;"
 
-        connection.query(query, [req], function(err, result) {
+        connection.query(queryString, [req], function(err, result) {
             if (err) {
                 console.log(err);
             }   else {
