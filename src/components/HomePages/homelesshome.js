@@ -128,13 +128,11 @@ export default function PermanentDrawerLeft() {
           <div className={classes.toolbar} />
           <Typography paragraph>
             <h1>Homeless Home Page</h1>
-            Welcome to the Bridge the Gap Homeless Home Page! Review the available items below to see what is available at 
+            <p style={{textAlign:"justify"}}>Welcome to the Bridge the Gap Homeless Home Page! Review the available items below to see what is available at 
             the agency's in your area. Once you have claimed the items, please contact the agency to confirm your selection 
             and arrange to pick up the item(s). If you are claiming a bed at one of the shelters, confirm that the bed(s) 
             are available and confirm when you will arrive. If you are do not arrive within 30 minutes of the scheduled 
-            pick-up time, the item(s) will be returned to the agency's inventory.
-
-            <br/> <br/>
+            pick-up time, the item(s) will be returned to the agency's inventory.</p>
             <AvailableItems />
           </Typography>
         </main>
