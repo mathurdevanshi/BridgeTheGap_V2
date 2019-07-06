@@ -46,14 +46,8 @@ export default function CommunityCard() {
         </CardActionArea>
         <CardActions>
           <Button size="small" color="primary">
-            <ModalTemplate />
-            {/* <Link component={RouterLink} to="/create-community">
-              Create Account
-            </Link> */}
-          </Button>
-          <Button size="small" color="primary">
             <Link component={RouterLink} to="/communityhome">
-              Learn More
+              View Agency Needs
             </Link>
           </Button>
         </CardActions>

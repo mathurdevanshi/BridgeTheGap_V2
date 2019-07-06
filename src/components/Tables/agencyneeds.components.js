@@ -1,7 +1,6 @@
 import React from 'react';
 import MaterialTable from 'material-table';
 // import Template from "../Template/template";
-import "./tables.css";
 
 export default function MaterialTableDemo() {
   const [state, setState] = React.useState({
@@ -36,35 +35,6 @@ export default function MaterialTableDemo() {
         title="Agency's Needs"
         columns={state.columns}
         data={state.data}
-        editable={{
-          onRowAdd: newData =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                const data = [...state.data];
-                data.push(newData);
-                setState({ ...state, data });
-              }, 600);
-            }),
-          onRowUpdate: (newData, oldData) =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                const data = [...state.data];
-                data[data.indexOf(oldData)] = newData;
-                setState({ ...state, data });
-              }, 600);
-            }),
-          onRowDelete: oldData =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                const data = [...state.data];
-                data.splice(data.indexOf(oldData), 1);
-                setState({ ...state, data });
-              }, 600);
-            }),
-        }}
       />
     </div>
 

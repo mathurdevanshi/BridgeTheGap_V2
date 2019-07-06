@@ -1,6 +1,5 @@
 import React from 'react';
 import Template from "../Template/template";
-import CommunityPanel from "../Panels/communitypanel";
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -17,7 +16,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from "react-router-dom";
 import { red, blueGrey, teal } from '@material-ui/core/colors';
 import SvgIcon from '@material-ui/core/SvgIcon';
-
+import AgencyNeeds from "../Tables/agencyneeds.components";
 
 const drawerWidth = 240;
 
@@ -67,12 +66,12 @@ export default function PermanentDrawerLeft() {
       <div className={classes.root} style={{ opacity: .90 }} >
         <CssBaseline />
         {/* <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h6" noWrap>
-              Permanent drawer
-          </Typography>
-          </Toolbar>
-        </AppBar> */}
+        <Toolbar>
+          <Typography variant="h6" noWrap>
+            Permanent drawer
+        </Typography>
+        </Toolbar>
+      </AppBar> */}
         <Drawer
           className={classes.drawer}
           variant="permanent"
@@ -116,36 +115,22 @@ export default function PermanentDrawerLeft() {
           <Divider />
           {/* <ListItem button component={Link} to="/design"></ListItem> */}
           {/* <List>
-            {['Claimed Items', 'Inventory', 'Pending Donations', 'Wishlist'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List> */}
+          {['Claimed Items', 'Inventory', 'Pending Donations', 'Wishlist'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List> */}
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Typography paragraph>
-            <h1>Community Home</h1>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-            ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-            facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-            gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-            donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-            adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-            Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-            imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-            arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-            donec massa sapien faucibus et molestie ac.
-            <CommunityPanel />
+            <h1>Community Home Page</h1>
+            <p style={{ textAlign: "justify" }}>Welcome to the Bridge the Gap Community Home Page! Below you will find an overview of items that agency's in your area are in need of. When organizing your next classroom collection drive, or your family is looking to donate items, you can visit this page to see what items the agency's in your area need to help your local homeless population.</p>
+
+            <AgencyNeeds />
           </Typography>
-          {/* <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-            facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-            tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-            consequat mauris. 
-        </Typography> */}
         </main>
       </div>
     </Template>

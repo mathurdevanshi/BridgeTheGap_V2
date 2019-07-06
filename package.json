@@ -11,10 +11,7 @@
     "@material-ui/core": "^4.1.3",
     "@material-ui/icons": "^4.2.1",
     "antd": "^3.20.0",
-<<<<<<< HEAD:client/package.json
     "axios": "^0.19.0",
-=======
->>>>>>> d325813818f4e0284fd0255d267c34f2b6899f17:package.json
     "bootstrap": "^4.3.1",
     "formik": "^1.5.7",
     "material-table": "^1.40.0",

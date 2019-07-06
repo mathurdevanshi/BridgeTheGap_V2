@@ -1,6 +1,4 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -13,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import homeless from "../../images/home-less.jpg";
 import ModalTemplate from "../Modal/homelessaccount";
 import '../MainPage/main.css';
+import LoginModal from "../Modal/login";
 
 
 
@@ -57,9 +56,8 @@ export default function HomelessCard() {
           </Button>
 
           <Button size="small" color="primary">
-            <Link component={RouterLink} to="/homelesshome">
-              Learn More
-            </Link>
+
+            <LoginModal />
           </Button>
         </CardActions>
       </Card>

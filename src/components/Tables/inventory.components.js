@@ -2,15 +2,16 @@ import React from 'react';
 import MaterialTable from 'material-table';
 import API from "../../utils/API";
 // import Template from "../../Template/template";
+import "../Tables/tables.css";
 
 function saveData(newData) {
   API.saveDataToInventory(newData)
-  .then((res) => {
-    console.log(res);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export default function MaterialTableDemo() {
@@ -25,7 +26,7 @@ export default function MaterialTableDemo() {
       //     lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
       //   },
     ],
-    
+
     // Need an array of objects here
     data: [
       { category: 'Food', itemName: 'Canned Green Beans', quantity: 10 },
@@ -50,9 +51,9 @@ export default function MaterialTableDemo() {
                 resolve();
 
                 saveData(newData);
-                
+
                 console.log(newData);
-                
+
                 const data = [...state.data];
                 data.push(newData);
                 setState({ ...state, data });
