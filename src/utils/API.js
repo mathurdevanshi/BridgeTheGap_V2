@@ -1,9 +1,16 @@
 import axios from "axios";
 
 export default {
-    // Saves users in databse
+    saveDataToInventory: (data) => {
+        // return new Promise((resolve)=>{
+        //     resolve(data)
+        // })
+        //console.log(data);
+
+    },
+
     checkUsersToken: (token) => {
-        return axios.post("/api/agencies/test", token);
+        return axios.post("/api/agencies/authorize", token);
     },
 
     registerClient: (newClient) => {

@@ -71,7 +71,7 @@ module.exports = {
               // Save user 
               userOrm.saveUser(newUser);
 
-              jwt.sign({ user: userId }, privateKey, { expiresIn: "2h" }, (error, token) => {
+              jwt.sign({ userId }, privateKey, { expiresIn: "2h" }, (error, token) => {
                 console.log("token is being created and sent");
                 res.json({
                   token: token

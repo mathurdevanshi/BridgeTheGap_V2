@@ -2,35 +2,44 @@ const dataOrm = require("../config/dataOrm");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const privateKey = fs.readFileSync("private.key");
+let authorizedId;
 
 function checkToken(uncheckedToken) {
     console.log("token is being passed into check function\n", uncheckedToken);
     if (typeof uncheckedToken !== undefined) {
         console.log("token has been checked");
-        let checkedToken = uncheckedToken.test;
+        let checkedToken = uncheckedToken.authorized;
 
         return checkedToken;
     } else {
         return 403;
     }
 
-}
+};
+
 module.exports = {
     checkIfAuthorizedGrabData: (req, res) => {
 
-        // dataOrm.grabData();
         let token = checkToken(req.body);
-        console.log(token);
+        // console.log(token);
         
         jwt.verify(token, privateKey, (err, authData) => {
             if (err) {
                 res.sendStatus(403);
             } else {
-                res.json({
-                    authData: authData
-                })
+                // console.log(authData.userId.userId);
+                authorizedId = authData.userId.userId;
+                
+                // Here is where we would make the call to grab data and send to front end
+                dataOrm.grabData(authorizedId, (result) => {
+                    console.log(result);
+                });
             }
         })
+    },
+
+    insertData: (req, res) => {
+        console.log("inserting data");
     }
 }
 
