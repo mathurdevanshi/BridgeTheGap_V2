@@ -1,23 +1,19 @@
 import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import Template from "../Template/template";
 import AgencyPanel from "../Panels/agencypanel";
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
-// import AppBar from '@material-ui/core/AppBar';
-// import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-// import InboxIcon from '@material-ui/icons/MoveToInbox';
-// import MailIcon from '@material-ui/icons/Mail';
 import { Link } from "react-router-dom";
 import { red, blueGrey, teal } from '@material-ui/core/colors';
 import SvgIcon from '@material-ui/core/SvgIcon';
+import API from '../../utils/API';
 
 
 const drawerWidth = 240;
@@ -60,36 +56,53 @@ function HomeIcon(props) {
   );
 }
 
-export default function PermanentDrawerLeft() {
-  const classes = useStyles();
 
-  return (
-    <Template>
-      <div className={classes.root} style={{ opacity: .90 }} >
+class AgencyComponent extends React.Component{
+  
+  state = {
+    classes : useStyles,
+    authorized : false
+  }
+
+  componentDidMount() {
+    let token = localStorage.getItem("jwt");
+
+    let tokenObject =  {
+      test: token
+    };
+
+    console.log(token);
+
+    API.checkUsersToken(tokenObject)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
+  render() {
+    return (
+    
+      <div className={this.state.classes.root} style={{ opacity: .90 }} >
         <CssBaseline />
-        {/* <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h6" noWrap>
-              Permanent drawer
-          </Typography>
-          </Toolbar>
-        </AppBar> */}
         <Drawer
-          className={classes.drawer}
+          className={this.state.classes.drawer}
           variant="permanent"
           classes={{
-            paper: classes.drawerPaper,
+            paper: this.state.classes.drawerPaper,
           }}
           anchor="left"
         >
-          <div className={classes.toolbar} />
+          <div className={this.state.classes.toolbar} />
           <Divider />
           <List  >
             {['Home'].map((text) => (
               <ListItem button key={text} component={Link} to="/">
                 <ListItemIcon>
                   <HomeIcon
-                    className={classes.icon}
+                    className={this.state.classes.icon}
                     color="primary"
                     fontSize="large"
                     component={svgProps => {
@@ -115,18 +128,10 @@ export default function PermanentDrawerLeft() {
             ))}
           </List>
           <Divider />
-          <ListItem button component={Link} to="/design"></ListItem>
-          {/* <List>
-            {['Pending Donations',].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List> */}
+        <ListItem button component={Link} to="/design"></ListItem>
         </Drawer>
-        <main className={classes.content} >
-          <div className={classes.toolbar} />
+        <main className={this.state.classes.content} >
+          <div className={this.state.classes.toolbar} />
           <Typography paragraph className="col-md-12">
             <h1>Agency Home</h1>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
@@ -143,6 +148,12 @@ export default function PermanentDrawerLeft() {
           <AgencyPanel />
         </main>
       </div>
-    </Template>
+    // </Template>
   );
+  }
+ 
 }
+// export default function PermanentDrawerLeft() {
+
+// }
+export default AgencyComponent;

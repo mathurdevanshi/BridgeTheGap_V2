@@ -58,7 +58,9 @@ function HomeIcon(props) {
     </SvgIcon>
   );
 }
-
+class Example extends React.Component {
+  
+}
 export default function PermanentDrawerLeft() {
   const classes = useStyles();
 
