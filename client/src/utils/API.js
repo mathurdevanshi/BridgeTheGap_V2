@@ -2,6 +2,10 @@ import axios from "axios";
 
 export default {
     // Saves users in databse
+    checkUsersToken: (token) => {
+        return axios.post("/api/agencies/test", token);
+    },
+
     registerClient: (newClient) => {
         return axios.post("/api/users/client", newClient);
     },

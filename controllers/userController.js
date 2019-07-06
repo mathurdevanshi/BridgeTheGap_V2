@@ -98,7 +98,7 @@ module.exports = {
           console.log(err);
         } else if (samepasword) {
           console.log("User has been authorized");
-          jwt.sign({user: authUser[0].username}, privateKey, { expiresIn: "2h" }, (error, token) => {
+          jwt.sign({user: authUser[0].id}, privateKey, { expiresIn: "2h" }, (error, token) => {
             console.log("token is being created");
 
             res.json({

@@ -15,6 +15,7 @@ function handleChange(value) {
 
 const AgencyAccountForm = Form.create({ name: 'form_in_modal' })(
   // eslint-disable-next-line
+
   class extends React.Component {
     render() {
       const { visible, onCancel, onCreate, form } = this.props;
@@ -179,7 +180,7 @@ class ModalTemplate extends React.Component {
       .then((res) => {
         console.log("api called was successful!");
         let token = res.data.token;
-        localStorage.setItem("jwt", JSON.stringify(token));
+        localStorage.setItem("jwt", token);
 
       })
       .catch((err) => {
