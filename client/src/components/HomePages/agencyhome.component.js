@@ -78,7 +78,9 @@ class AgencyComponent extends React.Component{
     API.checkUsersToken(tokenObject)
     .then((res) => {
       console.log(res);
-      this.setState(res);
+      this.setState({
+        agencyData : res
+      });
       console.log("agency data" ,this.state.agencyData);
     })
     .catch((err) => {
@@ -125,7 +127,6 @@ class AgencyComponent extends React.Component{
                       );
                     }}
                   />
-                  {/* <InboxIcon /> */}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
@@ -144,7 +145,6 @@ class AgencyComponent extends React.Component{
           <AgencyPanel />
         </main>
       </div>
-    // </Template>
   );
   }
  

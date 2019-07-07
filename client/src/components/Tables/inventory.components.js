@@ -20,11 +20,6 @@ export default function MaterialTableDemo() {
       { title: 'Category', field: 'category' },
       { title: 'Item Name', field: 'itemName' },
       { title: 'Quantity', field: 'quantity', type: 'numeric' },
-      //   {
-      //     title: 'Birth Place',
-      //     field: 'birthCity',
-      //     lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-      //   },
     ],
 
     // Need an array of objects here
