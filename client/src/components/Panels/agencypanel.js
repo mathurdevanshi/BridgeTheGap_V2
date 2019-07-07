@@ -51,7 +51,8 @@ const ExpansionPanelDetails = withStyles(theme => ({
   },
 }))(MuiExpansionPanelDetails);
 
-export default function CustomizedExpansionPanels() {
+export default function CustomizedExpansionPanels(props) {
+
   const [expanded, setExpanded] = React.useState('panel1');
 
   const handleChange = panel => (event, newExpanded) => {
@@ -74,7 +75,7 @@ export default function CustomizedExpansionPanels() {
                 changes, and select the "checkmark icon" to confirm your changes.</li>
               <li><strong>Delete</strong> an item that is no longer needed select the "trash" icon to delete the row.</li>
             </ul>
-            <AgencyInventory />
+            <AgencyInventory data={props.data} />
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>

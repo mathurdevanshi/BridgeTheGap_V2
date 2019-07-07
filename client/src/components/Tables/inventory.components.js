@@ -1,3 +1,8 @@
+/* 
+  on line 23 i set the data that needs to be displayed by passing props from the parent component
+  when i try to just nest it into data on line 36 it just shows up as undefined probaly because it sets it before its given the value
+  this is the problem im currently stuck on.
+*/
 import React from 'react';
 import MaterialTable from 'material-table';
 import API from "../../utils/API";
@@ -14,14 +19,19 @@ function saveData(newData) {
     });
 };
 
-export default function MaterialTableDemo() {
+export default function MaterialTableDemo(props) {
+  let dataArray = props.data;
+
+  
+  console.log("this is where inventory props data is", dataArray);
+  
   const [state, setState] = React.useState({
     columns: [
       { title: 'Category', field: 'category' },
-      { title: 'Item Name', field: 'itemName' },
-      { title: 'Quantity', field: 'quantity', type: 'numeric' },
+      { title: 'Item Name', field: 'descriptionOfItem' },
+      { title: 'Quantity', field: 'currentQuantity', type: 'numeric' },
     ],
-
+  
     // Need an array of objects here
     data: [
       { category: 'Food', itemName: 'Canned Green Beans', quantity: 10 },
@@ -32,7 +42,7 @@ export default function MaterialTableDemo() {
       },
     ],
   });
-
+  
   return (
     <div className="tableBody">
       <MaterialTable
@@ -54,7 +64,7 @@ export default function MaterialTableDemo() {
                 setState({ ...state, data });
 
                 console.log(data);
-              }, 10000);
+              }, 600);
             }),
           onRowUpdate: (newData, oldData) =>
             new Promise(resolve => {

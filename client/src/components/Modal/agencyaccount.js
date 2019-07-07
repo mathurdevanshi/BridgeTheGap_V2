@@ -1,7 +1,7 @@
 import React from 'react';
 import API from "../../utils/API";
-// import { Link as RouterLink } from 'react-router-dom';
-// import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { Redirect } from 'react-router'
 import 'antd/dist/antd.css';
 import '../MainPage/main.css'
 import '../../index.css';
@@ -17,9 +17,11 @@ const AgencyAccountForm = Form.create({ name: 'form_in_modal' })(
   // eslint-disable-next-line
 
   class extends React.Component {
+
     render() {
       const { visible, onCancel, onCreate, form } = this.props;
       const { getFieldDecorator } = form;
+
       return (
         <Modal 
           visible={visible}
@@ -153,6 +155,7 @@ const AgencyAccountForm = Form.create({ name: 'form_in_modal' })(
 class ModalTemplate extends React.Component {
   state = {
     visible: false,
+    redirect: false
   };
 
   showModal = () => {
@@ -182,6 +185,10 @@ class ModalTemplate extends React.Component {
         let token = res.data.token;
         localStorage.setItem("jwt", token);
 
+        this.setState({
+          redirect : true
+        });
+
       })
       .catch((err) => {
         console.log(err);
@@ -195,6 +202,11 @@ class ModalTemplate extends React.Component {
   };
 
   render() {
+    let redirect = this.state.redirect;
+
+    if (redirect) {
+      return <Redirect to="/agencyhome" />
+    }
     return (
       <div>
         <Button type="primary" onClick={this.showModal}>

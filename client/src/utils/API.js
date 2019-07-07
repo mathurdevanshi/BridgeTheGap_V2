@@ -2,11 +2,7 @@ import axios from "axios";
 
 export default {
     saveDataToInventory: (data) => {
-        // return new Promise((resolve)=>{
-        //     resolve(data)
-        // })
-        //console.log(data);
-
+        return axios.post("/api/agencies/insertData", data);
     },
 
     checkUsersToken: (token) => {

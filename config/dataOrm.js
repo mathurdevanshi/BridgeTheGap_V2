@@ -6,7 +6,7 @@ let ormObject = {
     grabData: (authorizedId, callback) => {
         // console.log(req);
         console.log("grabbing the data");
-        let queryString = "SELECT actionCreatedAt, descriptionOfItem, currentQuantity, actionZipCode ";
+        let queryString = "SELECT category, descriptionOfItem, currentQuantity ";
         queryString += " FROM agencyInventoryManagementDB ";
         queryString += "WHERE (id = ?) ORDER BY actionCreatedAt, category;"
 
@@ -41,7 +41,7 @@ let ormObject = {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log(result);
+                    callback(result);
 
                 }
             }

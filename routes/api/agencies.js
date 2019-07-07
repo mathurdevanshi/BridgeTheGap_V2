@@ -5,5 +5,7 @@ const data = require("../../controllers/dataController");
 router.route("/authorize")
 .post(data.checkIfAuthorizedGrabData);
 
+router.route("/insertData")
+.post(data.insertData)
 
 module.exports = router;

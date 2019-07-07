@@ -33,13 +33,26 @@ module.exports = {
                 // Here is where we would make the call to grab data and send to front end
                 dataOrm.grabData(authorizedId, (result) => {
                     console.log(result);
+                    res.send(result);
                 });
             }
         })
     },
 
     insertData: (req, res) => {
-        console.log("inserting data");
+        console.log(req.body);
+        let inventoryData = req.body;
+
+        inventoryData.action = "supply";
+        inventoryData.userId = authorizedId;
+
+        dataOrm.insertDataIntoInventory(inventoryData, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(result);
+            }
+        })
     }
 }
 

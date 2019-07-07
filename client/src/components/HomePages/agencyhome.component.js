@@ -77,11 +77,13 @@ class AgencyComponent extends React.Component{
 
     API.checkUsersToken(tokenObject)
     .then((res) => {
-      console.log(res);
+      // console.log(res.data);
+      
       this.setState({
-        agencyData : res
+        agencyData : res.data
       });
-      console.log("agency data" ,this.state.agencyData);
+
+      // console.log("agency data" ,this.state.agencyData);
     })
     .catch((err) => {
       console.log(err);
@@ -142,14 +144,12 @@ class AgencyComponent extends React.Component{
             <p style={{textAlign:"justify"}}>Welcome to the Bridge the Gap Agency Home Page! Below you will find an overview of 
             your agency's inventory, claimed items, and current wish list. Click on each panel for more information.</p>
         </Typography>
-          <AgencyPanel />
+          <AgencyPanel data={this.state.agencyData}/>
         </main>
       </div>
   );
   }
  
 }
-// export default function PermanentDrawerLeft() {
 
-// }
 export default AgencyComponent;
