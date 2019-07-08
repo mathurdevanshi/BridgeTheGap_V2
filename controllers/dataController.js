@@ -46,9 +46,10 @@ module.exports = {
         inventoryData.action = "supply";
         inventoryData.userId = authorizedId;
 
-        dataOrm.insertDataIntoInventory(inventoryData, (err, result) => {
-            if (err) {
-                console.log(err);
+        dataOrm.insertDataIntoInventory(inventoryData, (result) => {
+            if (result) {
+                console.log("noerror in data controller");
+                res.sendStatus(200);
             } else {
                 console.log(result);
             }

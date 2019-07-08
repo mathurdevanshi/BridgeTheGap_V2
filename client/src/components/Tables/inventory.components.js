@@ -20,10 +20,10 @@ function saveData(newData) {
 };
 
 export default function MaterialTableDemo(props) {
-  let dataArray = props.data;
+  // let dataArray = props.data;
 
   
-  console.log("this is where inventory props data is", dataArray);
+  console.log("this is where inventory props data is", props.data);
   
   const [state, setState] = React.useState({
     columns: [
@@ -33,22 +33,17 @@ export default function MaterialTableDemo(props) {
     ],
   
     // Need an array of objects here
-    data: [
-      { category: 'Food', itemName: 'Canned Green Beans', quantity: 10 },
-      {
-        category: 'Goods',
-        itemName: 'Pen',
-        quantity: 20,
-      },
-    ],
+    data: []
   });
+  const [data, setData] = React.useState([]);
+  console.log(state);
   
   return (
     <div className="tableBody">
       <MaterialTable
         title="Inventory"
         columns={state.columns}
-        data={state.data}
+        data={props.data}
         editable={{
           onRowAdd: newData =>
             new Promise(resolve => {
@@ -59,9 +54,8 @@ export default function MaterialTableDemo(props) {
 
                 console.log(newData);
 
-                const data = [...state.data];
-                data.push(newData);
-                setState({ ...state, data });
+                props.data.push(newData);
+                setData([ ...data, newData ]);
 
                 console.log(data);
               }, 600);

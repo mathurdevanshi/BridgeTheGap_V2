@@ -32,15 +32,16 @@ let ormObject = {
                 data.userId,
                 data.action,
                 data.category,
-                data.itemName,
-                data.quantity,
-                data.quantity,
+                data.descriptionOfItem,
+                data.currrentQuantity,
+                data.currentQuantity,
 
             ],
             (err, result) => {
                 if (err) {
                     console.log(err);
                 } else {
+                    console.log("no error");
                     callback(result);
 
                 }
