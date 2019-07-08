@@ -1,6 +1,10 @@
 import axios from "axios";
 
 export default {
+    getAllAgencyData: () => {
+        return axios.post("/api/agencies/getAllData");
+    },
+    
     saveDataToInventory: (data) => {
         return axios.post("/api/agencies/insertData", data);
     },

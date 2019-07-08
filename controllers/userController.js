@@ -9,10 +9,10 @@ const privateKey = fs.readFileSync("private.key");
 // Defining methods for the userController
 module.exports = {
   registerClient: (req, res) => {
-    let newClient = req.body;
-    newClient.id = parseInt(Math.random() * 10000000);
+    let newUser = req.body;
+    newUser.id = parseInt(Math.random() * 10000000);
+    console.log(newUser);
 
-    console.log(newClient);
     let saltRounds = 10;
     
     bcrypt.genSalt(saltRounds, function(err, salt) {
@@ -20,20 +20,20 @@ module.exports = {
         console.log(err);
       } else {
         
-        bcrypt.hash(newClient.password, salt, function(err, hash) {
+        bcrypt.hash(newUser.password, salt, function(err, hash) {
 
           if (err) {
             console.log(err);
           } else {
-              newClient.password = hash;
+              newUser.password = hash;
 
               let userId = {
-                userId: newClient.id,
+                userId: newUser.id,
               };
               // Save user 
-              userOrm.saveClient(newClient);
+              userOrm.saveUser(newUser);
 
-              jwt.sign({ user: userId }, privateKey, { expiresIn: "2h" }, (error, token) => {
+              jwt.sign({ userId }, privateKey, { expiresIn: "2h" }, (error, token) => {
                 console.log("token is being created and sent");
                 res.json({
                   token: token
@@ -91,14 +91,18 @@ module.exports = {
 
     userOrm.findUser(username, (authUser) => {
 
-      console.log(authUser[0].password);
-
-      bcrypt.compare(password, authUser[0].password, function(err, samepasword) {        
+      bcrypt.compare(password, authUser[0].userPassword, function(err, samepasword) {        
         if (err) {
           console.log(err);
         } else if (samepasword) {
           console.log("User has been authorized");
-          jwt.sign({user: authUser[0].id}, privateKey, { expiresIn: "2h" }, (error, token) => {
+          console.log(authUser[0].id);
+
+          let userId = {
+            userId : authUser[0].id
+          };
+
+          jwt.sign({userId}, privateKey, { expiresIn: "2h" }, (error, token) => {
             console.log("token is being created");
 
             res.json({

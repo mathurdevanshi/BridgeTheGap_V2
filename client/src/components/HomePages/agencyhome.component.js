@@ -57,7 +57,7 @@ function HomeIcon(props) {
 }
 
 
-class AgencyComponent extends React.Component{
+class AgencyComponent extends React.Component {
   
   state = {
     classes : useStyles,

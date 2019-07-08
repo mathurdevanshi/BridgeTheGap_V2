@@ -19,7 +19,7 @@ function checkToken(uncheckedToken) {
 
 module.exports = {
     checkIfAuthorizedGrabData: (req, res) => {
-
+        console.log("datacontroller has been reached");
         let token = checkToken(req.body);
         // console.log(token);
         
@@ -27,6 +27,7 @@ module.exports = {
             if (err) {
                 res.sendStatus(403);
             } else {
+                console.log(authData);
                 // console.log(authData.userId.userId);
                 authorizedId = authData.userId.userId;
                 
@@ -54,6 +55,11 @@ module.exports = {
                 console.log(result);
             }
         })
+    },
+
+    getAllAgencyData: (req, res) => {
+        console.log("data controller");
+        dataOrm.getAllAgencyData();
     }
 }
 

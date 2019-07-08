@@ -47,7 +47,22 @@ let ormObject = {
                 }
             }
         );
-    }
+    },
+
+    getAllAgencyData: () => {
+        console.log("dataOrm is reached");
+        let queryString = "SELECT * FROM agencyinformationdb ";
+        queryString += "LEFT JOIN agencyinventorymanagementdb ";
+        queryString += "ON agencyinformationdb.id = agencyinventorymanagementdb.id;";
+        
+        connection.query(queryString, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(result);
+            }
+        })
+    }   
 }
 
 module.exports = ormObject;

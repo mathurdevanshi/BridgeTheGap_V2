@@ -1,11 +1,10 @@
 import React from 'react';
-// import { Link as RouterLink } from 'react-router-dom';
-// import ReactDOM from 'react-dom';
+import API from "../../utils/API";
+import { Redirect } from 'react-router'
 import 'antd/dist/antd.css';
 import '../MainPage/main.css'
 import '../../index.css';
 import { Button, Modal, Form, Input, Select, } from 'antd';
-// import { FormGroup } from '@material-ui/core';
 
 const { Option } = Select;
 
@@ -36,17 +35,6 @@ const HomelessAccountForm = Form.create({ name: 'form_in_modal' })(
             <Form.Item label="Password" style={{ width: 408 }}>
               {getFieldDecorator('password')(<Input type="textarea" />)}
             </Form.Item>
-
-            {/* <Form.Item className="collection-create-form_last-form-item">
-              {getFieldDecorator('modifier', {
-                initialValue: 'public',
-              })(
-                <Radio.Group>
-                  <Radio value="public">Public</Radio>
-                  <Radio value="private">Private</Radio>
-                </Radio.Group>,
-              )}
-            </Form.Item> */}
           </Form>
         </Modal>
       );
@@ -57,6 +45,7 @@ const HomelessAccountForm = Form.create({ name: 'form_in_modal' })(
 class ModalTemplate extends React.Component {
   state = {
     visible: false,
+    redirect: false
   };
 
   showModal = () => {
@@ -77,6 +66,21 @@ class ModalTemplate extends React.Component {
       console.log('Received values of form: ', values);
       form.resetFields();
       this.setState({ visible: false });
+
+      API.loginUser(values)
+      .then((res) => {
+        console.log("api called was successful!");
+        let token = res.data.token;
+        localStorage.setItem("jwt", token);
+
+        this.setState({
+          redirect : true
+        });
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     });
   };
 
@@ -85,19 +89,25 @@ class ModalTemplate extends React.Component {
   };
 
   render() {
-    return (
-      <div>
-        <Button type="primary" onClick={this.showModal}>
-          Sign In
-        </Button>
-        <HomelessAccountForm
-          wrappedComponentRef={this.saveFormRef}
-          visible={this.state.visible}
-          onCancel={this.handleCancel}
-          onCreate={this.handleCreate}
-        />
-      </div>
-    );
+    let redirect = this.state.redirect;
+    
+    if (redirect) {
+      return <Redirect to="/agencyhome" />
+    } else {
+      return (
+        <div>
+          <Button type="primary" onClick={this.showModal}>
+            Sign In
+          </Button>
+          <HomelessAccountForm
+            wrappedComponentRef={this.saveFormRef}
+            visible={this.state.visible}
+            onCancel={this.handleCancel}
+            onCreate={this.handleCreate}
+          />
+        </div>
+      );
+    }
   }
 }
 

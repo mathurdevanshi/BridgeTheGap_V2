@@ -6,6 +6,9 @@ router.route("/authorize")
 .post(data.checkIfAuthorizedGrabData);
 
 router.route("/insertData")
-.post(data.insertData)
+.post(data.insertData);
+
+router.route("/getAllData")
+.post(data.getAllAgencyData)
 
 module.exports = router;

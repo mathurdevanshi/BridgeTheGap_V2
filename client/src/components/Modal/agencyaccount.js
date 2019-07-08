@@ -1,6 +1,5 @@
 import React from 'react';
 import API from "../../utils/API";
-import { BrowserRouter } from 'react-router-dom';
 import { Redirect } from 'react-router'
 import 'antd/dist/antd.css';
 import '../MainPage/main.css'
