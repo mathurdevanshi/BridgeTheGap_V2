@@ -57,7 +57,7 @@ export default function HomelessCard() {
 
           <Button size="small" color="primary">
 
-            <LoginModal />
+            <LoginModal redirectLink="/homelesshome" />
           </Button>
         </CardActions>
       </Card>

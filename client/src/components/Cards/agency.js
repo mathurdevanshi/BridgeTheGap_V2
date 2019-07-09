@@ -52,7 +52,7 @@ export default function AgencyCard() {
             </Link> */}
           </Button>
           <Button size="small" color="primary">
-            <LoginModal />
+            <LoginModal redirectLink="/agencyhome" />
           </Button>
         </CardActions>
       </Card>

@@ -68,19 +68,19 @@ class ModalTemplate extends React.Component {
       this.setState({ visible: false });
 
       API.loginUser(values)
-      .then((res) => {
-        console.log("api called was successful!");
-        let token = res.data.token;
-        localStorage.setItem("jwt", token);
+        .then((res) => {
+          console.log("api called was successful!");
+          let token = res.data.token;
+          localStorage.setItem("jwt", token);
 
-        this.setState({
-          redirect : true
+          this.setState({
+            redirect: true
+          });
+
+        })
+        .catch((err) => {
+          console.log(err);
         });
-
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     });
   };
 
@@ -90,9 +90,9 @@ class ModalTemplate extends React.Component {
 
   render() {
     let redirect = this.state.redirect;
-    
+
     if (redirect) {
-      return <Redirect to="/agencyhome" />
+      return <Redirect to={this.props.redirectLink} />
     } else {
       return (
         <div>
