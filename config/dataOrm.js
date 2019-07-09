@@ -49,8 +49,8 @@ let ormObject = {
         );
     },
 
-    getAllAgencyData: () => {
-        console.log("dataOrm is reached");
+    getAllAgencyData: (callback) => {
+        // console.log("dataOrm is reached");
         let queryString = "SELECT * FROM agencyinformationdb ";
         queryString += "LEFT JOIN agencyinventorymanagementdb ";
         queryString += "ON agencyinformationdb.id = agencyinventorymanagementdb.id;";
@@ -59,7 +59,8 @@ let ormObject = {
             if (err) {
                 console.log(err);
             } else {
-                console.log(result);
+                // console.log(result);
+                callback(result);
             }
         })
     }   

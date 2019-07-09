@@ -1,6 +1,10 @@
 import axios from "axios";
 
 export default {
+    getAllAgencyDataCommunity: () => {
+        return axios.post("/api/agencies/getAllDataCommunity");
+    },
+
     getAllAgencyData: () => {
         return axios.post("/api/agencies/getAllData");
     },

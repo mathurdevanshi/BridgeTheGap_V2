@@ -56,10 +56,52 @@ module.exports = {
             }
         })
     },
+    getAllAgencyDataForCommunity: (req, res) => {
+        dataOrm.getAllAgencyData((result) => {
+            console.log("data///////// controller");
+            let objectArray = [];
+            for (let i = 0; i < result.length; i++) {
+                let dataObject = {
+                    name: result[i].username,
+                    phoneNumber: result[i].phoneNumber,
+                    category: result[i].category,
+                    item: result[i].descriptionOfItem,
+                    quantity: result[i].currentQuantity,  
+                    address: result[i].streetName + ", " + result[i].city + ", " + result[i].stateName + ", " + result[i].zipCode   
+                }
+
+                objectArray.push(dataObject);
+            }
+            console.log(objectArray);
+            // console.log(dataObject);
+
+            res.send(objectArray);
+        })
+    },
 
     getAllAgencyData: (req, res) => {
         console.log("data controller");
-        dataOrm.getAllAgencyData();
+        let objectArray = [];
+
+        dataOrm.getAllAgencyData((result) => {
+
+            for (let i = 0; i < result.length; i++) {
+                let dataObject = {
+                    name: result[0].username,
+                    phoneNumber: result[0].phoneNumber,
+                    category: result[0].category,
+                    item: result[0].descriptionOfItem,
+                    quantity: result[0].currentQuantity,  
+                    address: "TBD"   
+                }
+
+                objectArray.push(dataObject);
+            }
+            console.log(objectArray);
+            // console.log(dataObject);
+
+            res.send(objectArray);
+        });
     }
 }
 

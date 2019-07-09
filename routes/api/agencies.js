@@ -9,6 +9,9 @@ router.route("/insertData")
 .post(data.insertData);
 
 router.route("/getAllData")
-.post(data.getAllAgencyData)
+.post(data.getAllAgencyData);
+
+router.route("/getAllDataCommunity")
+.post(data.getAllAgencyDataForCommunity);
 
 module.exports = router;

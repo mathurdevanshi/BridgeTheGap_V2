@@ -1,8 +1,8 @@
 import React from 'react';
 import API from "../../utils/API";
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
 import 'antd/dist/antd.css';
-import '../MainPage/main.css'
+import '../MainPage/main.css';
 import '../../index.css';
 import { Button, Modal, Form, Input, Select } from 'antd';
 
@@ -116,18 +116,7 @@ const AgencyAccountForm = Form.create({ name: 'form_in_modal' })(
                 {getFieldDecorator('zip')(<Input type="textarea" />)}
               </Form.Item>
             </Form>
-            {/* <Form.Item label="Address">
-              {getFieldDecorator('address')(<Input type="textarea" />)}
-            </Form.Item>
-            <Form.Item label="City">
-              {getFieldDecorator('city')(<Input type="textarea" />)}
-            </Form.Item>
-            <Form.Item label="State">
-              {getFieldDecorator('state')(<Input type="textarea" />)}
-            </Form.Item>
-            <Form.Item label="Zip Code">
-              {getFieldDecorator('zip')(<Input type="textarea" />)}
-            </Form.Item> */}
+
             <Form.Item label="Username">
               {getFieldDecorator('username')(<Input type="textarea" />)}
             </Form.Item>

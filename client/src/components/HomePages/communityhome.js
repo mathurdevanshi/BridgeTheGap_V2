@@ -60,12 +60,15 @@ class CommunityComponent extends React.Component {
     agencyData : undefined
   }
 
-  componentDidMount() {
-    // console.log("component is mounting");
-    
+  componentDidMount() {    
     API.getAllAgencyData()
     .then((res) => {
       console.log(res.data);
+
+      this.setState({
+        agencyData : res.data
+      });
+
     })
     .catch((err) => {
       console.log(err);
@@ -124,7 +127,7 @@ class CommunityComponent extends React.Component {
             <h1>Community Home Page</h1>
             <p style={{ textAlign: "justify" }}>Welcome to the Bridge the Gap Community Home Page! Below you will find an overview of items that agency's in your area are in need of. When organizing your next classroom collection drive, or your family is looking to donate items, you can visit this page to see what items the agency's in your area need to help your local homeless population.</p>
 
-            <AgencyNeeds />
+            <AgencyNeeds data={this.state.agencyData} />
           </Typography>
         </main>
       </div>

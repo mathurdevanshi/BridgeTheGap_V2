@@ -2,10 +2,10 @@ import React from 'react';
 import MaterialTable from 'material-table';
 // import Template from "../../Template/template";
 
-export default function MaterialTableDemo() {
+export default function MaterialTableDemo(props) {
   const [state] = React.useState({
     columns: [
-      { title: 'Agency Name', field: 'agencyName' },
+      { title: 'Agency Name', field: 'name' },
       { title: 'Phone Number', field: 'phoneNumber', type: 'numeric' },
       { title: 'Address', field: 'address' },
       { title: 'Item', field: 'item' },
@@ -35,7 +35,7 @@ export default function MaterialTableDemo() {
       <MaterialTable
         title="Available Items"
         columns={state.columns}
-        data={state.data}
+        data={props.data}
       />
     </div>
   );
