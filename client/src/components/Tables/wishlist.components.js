@@ -1,38 +1,48 @@
 import React from 'react';
 import MaterialTable from 'material-table';
+import API from "../../utils/API";
+import { func } from 'prop-types';
 // import Template from "../../Template/template";
+function saveData(newData) {
+  API.lastShot(newData)
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+}
 
-export default function MaterialTableDemo() {
+export default function MaterialTableDemo(props) {
+  console.log("this is where wishlist props data is", props.data);
+
   const [state, setState] = React.useState({
     columns: [
       { title: 'Category', field: 'category' },
-      { title: 'Item Name', field: 'itemName' },
-      { title: 'Quantity', field: 'quantity', type: 'numeric' },
+      { title: 'Item Name', field: 'descriptionOfItem' },
+      { title: 'Quantity', field: 'currentQuantity', type: 'numeric' },
     ],
-    data: [
-      { category: 'Food', itemName: 'Water', quantity: 10 },
-      {
-        category: 'Goods',
-        itemName: 'Blankets',
-        quantity: 20,
-      },
-    ],
+    data: [],
   });
+  const [data, setData] = React.useState([]);
+
 
   return (
     <div className="tableBody">
       <MaterialTable
         title="Wishlist"
         columns={state.columns}
-        data={state.data}
+        data={props.data}
         editable={{
           onRowAdd: newData =>
             new Promise(resolve => {
               setTimeout(() => {
                 resolve();
-                const data = [...state.data];
-                data.push(newData);
-                setState({ ...state, data });
+
+                saveData(newData);
+
+                props.data.push(newData);
+                setState({ ...state, newData });
               }, 600);
             }),
           onRowUpdate: (newData, oldData) =>

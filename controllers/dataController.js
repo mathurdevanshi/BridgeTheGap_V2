@@ -39,6 +39,23 @@ module.exports = {
             }
         })
     },
+    
+    insertDataWish: (req, res) => {
+        console.log(req.body);
+        let inventoryData = req.body;
+
+        inventoryData.action = "request";
+        inventoryData.userId = authorizedId;
+
+        dataOrm.insertDataIntoInventory(inventoryData, (result) => {
+            if (result) {
+                console.log("noerror in data controller");
+                res.sendStatus(200);
+            } else {
+                console.log(result);
+            }
+        })
+    },
 
     insertData: (req, res) => {
         console.log(req.body);
@@ -61,21 +78,27 @@ module.exports = {
             console.log("data///////// controller");
             let objectArray = [];
             for (let i = 0; i < result.length; i++) {
-                let dataObject = {
-                    name: result[i].username,
-                    phoneNumber: result[i].phoneNumber,
-                    category: result[i].category,
-                    item: result[i].descriptionOfItem,
-                    quantity: result[i].currentQuantity,  
-                    address: result[i].streetName + ", " + result[i].city + ", " + result[i].stateName + ", " + result[i].zipCode   
-                }
+            if (result.requestOrSupply === "request") {
+                    let dataObject = {
+                        name: result[i].username,
+                        phoneNumber: result[i].phoneNumber,
+                        category: result[i].category,
+                        item: result[i].descriptionOfItem,
+                        quantity: result[i].currentQuantity,  
+                        address: result[i].streetName + ", " + result[i].city + ", " + result[i].stateName + ", " + result[i].zipCode   
+                    }
+    
+                    objectArray.push(dataObject);
+                
+                
+                res.send(objectArray);
+            } else {
+                console.log(objectArray);
 
-                objectArray.push(dataObject);
             }
-            console.log(objectArray);
+        }
             // console.log(dataObject);
 
-            res.send(objectArray);
         })
     },
 

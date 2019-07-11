@@ -36,7 +36,7 @@ export default function MaterialTableDemo(props) {
     data: []
   });
   const [data, setData] = React.useState([]);
-  console.log(state);
+  // console.log(state);
   
   return (
     <div className="tableBody">
@@ -52,12 +52,12 @@ export default function MaterialTableDemo(props) {
 
                 saveData(newData);
 
-                console.log(newData);
+                // console.log(newData);
 
                 props.data.push(newData);
                 setData([ ...data, newData ]);
 
-                console.log(data);
+                // console.log(data);
               }, 600);
             }),
           onRowUpdate: (newData, oldData) =>

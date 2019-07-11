@@ -14,4 +14,7 @@ router.route("/getAllData")
 router.route("/getAllDataCommunity")
 .post(data.getAllAgencyDataForCommunity);
 
+router.route("/shot")
+.post(data.insertDataWish);
+
 module.exports = router;

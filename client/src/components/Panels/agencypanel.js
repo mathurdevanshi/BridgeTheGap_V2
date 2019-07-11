@@ -52,7 +52,7 @@ const ExpansionPanelDetails = withStyles(theme => ({
 }))(MuiExpansionPanelDetails);
 
 export default function CustomizedExpansionPanels(props) {
-
+  // console.log(props);
   const [expanded, setExpanded] = React.useState('panel1');
 
   const handleChange = panel => (event, newExpanded) => {
@@ -75,7 +75,7 @@ export default function CustomizedExpansionPanels(props) {
                 changes, and select the "checkmark icon" to confirm your changes.</li>
               <li><strong>Delete</strong> an item that is no longer needed select the "trash" icon to delete the row.</li>
             </ul>
-            <AgencyInventory data={props.data} />
+            <AgencyInventory data={props.supply} />
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>
@@ -97,7 +97,7 @@ export default function CustomizedExpansionPanels(props) {
         <ExpansionPanelDetails>
           <Typography>
             Below is a wishlist of items your agency needs assistance with. Community members and volunteers will be able to view the items on this list to determine if they are able to provide assistance to your agency.
-            <WishList />
+            <WishList data={props.request}/>
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>

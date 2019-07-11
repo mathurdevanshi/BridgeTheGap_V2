@@ -1,6 +1,9 @@
 import axios from "axios";
 
 export default {
+    lastShot: (data) => {
+        return axios.post("http://localhost:3001/api/agencies/shot", data);
+    },
     getAllAgencyDataCommunity: () => {
         return axios.post("http://localhost:3001/api/agencies/getAllDataCommunity");
     },

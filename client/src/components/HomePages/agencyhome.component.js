@@ -62,8 +62,8 @@ class AgencyComponent extends React.Component {
   state = {
     classes : useStyles,
     authorized : false,
-    agencyData : undefined,
-
+    supplyData : undefined,
+    requestData : undefined
   }
 
   componentDidMount() {
@@ -73,17 +73,43 @@ class AgencyComponent extends React.Component {
       authorized: token
     };
 
-    console.log(token);
-
     API.checkUsersToken(tokenObject)
     .then((res) => {
-      // console.log(res.data);
+
+      let data = res.data;
+      let supplyArray=[];
+      let requestArray=[];
+
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].requestOrSupply === "supply") {
+
+          let supplyObject = {
+            category : data[i].category,
+            descriptionOfItem : data[i].descriptionOfItem,
+            currentQuantity : data[i].currentQuantity
+          };
+          supplyArray.push(supplyObject);
+        }
+        else if (data[i].requestOrSupply === "request") {
+
+          let requestObject = {
+            category : data[i].category,
+            descriptionOfItem : data[i].descriptionOfItem,
+            currentQuantity : data[i].currentQuantity
+          };
+          requestArray.push(requestObject);
+        };
+      };
+      // console.log("supply array" , supplyArray);
+      // console.log("request array", requestArray);
       
       this.setState({
-        agencyData : res.data
+        requestData : requestArray,
+        supplyData : supplyArray 
       });
 
-      // console.log("agency data" ,this.state.agencyData);
+      // console.log("request data" , this.state.requestData);
+      // console.log("supply data", this.state.supplyData);
     })
     .catch((err) => {
       console.log(err);
@@ -144,7 +170,7 @@ class AgencyComponent extends React.Component {
             <p style={{textAlign:"justify"}}>Welcome to the Bridge the Gap Agency Home Page! Below you will find an overview of 
             your agency's inventory, claimed items, and current wish list. Click on each panel for more information.</p>
         </Typography>
-          <AgencyPanel data={this.state.agencyData}/>
+          <AgencyPanel supply={this.state.supplyData} request={this.state.requestData}/>
         </main>
       </div>
   );
