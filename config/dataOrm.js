@@ -33,7 +33,7 @@ let ormObject = {
                 data.action,
                 data.category,
                 data.descriptionOfItem,
-                data.currrentQuantity,
+                data.currentQuantity,
                 data.currentQuantity,
 
             ],
@@ -59,7 +59,7 @@ let ormObject = {
             if (err) {
                 console.log(err);
             } else {
-                // console.log(result);
+                console.log(result);
                 callback(result);
             }
         })

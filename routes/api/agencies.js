@@ -11,9 +11,6 @@ router.route("/insertData")
 router.route("/getAllData")
 .post(data.getAllAgencyData);
 
-router.route("/getAllDataCommunity")
-.post(data.getAllAgencyDataForCommunity);
-
 router.route("/shot")
 .post(data.insertDataWish);
 

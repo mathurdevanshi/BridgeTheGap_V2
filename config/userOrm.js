@@ -27,9 +27,7 @@ let ormObject = {
             function (err, result) {
                 if (err) {
                     console.log(err);
-                } else {
-                    console.log(result);
-                }
+                } 
             }
         )
     },
@@ -37,16 +35,6 @@ let ormObject = {
     saveUser: (req, res) => {
         let queryString= "INSERT INTO ";
         console.log(req);
-
-        if (req.category === "agency") {
-
-            queryString += "agencyinformationdb ";
-
-        } else if (req.category === "volunteer") {
-
-            queryString += "volunteerinformationdb"
-
-        };
 
         queryString += "(id, fullName, accountType, email, phoneNumber, streetName, city, zipCode, stateName, username, userPassword) ";
         queryString +="VALUES (?,?,?,?,?,?,?,?,?,?,?);";

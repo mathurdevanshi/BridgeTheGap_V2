@@ -63,10 +63,29 @@ class CommunityComponent extends React.Component {
   componentDidMount() {    
     API.getAllAgencyData()
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
+      let data = res.data;
+      let agencyRequestArray=[];
+
+      for(let i = 0; i < data.length; i++) {
+        if (data[i].requestOrSupply === "request") {
+
+          let agencyRequestObject = {
+            name : data[i].name,
+            phoneNumber : data[i].phoneNumber,
+            category : data[i].category,
+            item : data[i].item,
+            quantity : data[i].quantity
+          };
+
+          agencyRequestArray.push(agencyRequestObject);;
+        }
+      }
+
+      console.log(agencyRequestArray);
 
       this.setState({
-        agencyData : res.data
+        agencyData : agencyRequestArray
       });
 
     })
