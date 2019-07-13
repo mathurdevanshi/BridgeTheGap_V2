@@ -169,9 +169,9 @@ class ModalTemplate extends React.Component {
       // API call to register user in our database
       API.registerUser(values)
       .then((res) => {
-        console.log("api called was successful!");
-        let token = res.data.token;
-        localStorage.setItem("jwt", token);
+        console.log(res);
+        // let token = res.data.token;
+        // localStorage.setItem("jwt", token);
 
         this.setState({
           redirect : true
