@@ -32,7 +32,7 @@ let ormObject = {
         )
     },
 
-    saveUser: (req, res) => {
+    saveUser: (req, callback) => {
         console.log(req);
         
         let queryString= "INSERT INTO agencyinformationdb ";
@@ -55,13 +55,9 @@ let ormObject = {
             ], 
             
             function(err, result) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log(result);
+                callback(err, result);
             }
-
-        });
+        );
     },
 
     findUser: (req, callback) => {

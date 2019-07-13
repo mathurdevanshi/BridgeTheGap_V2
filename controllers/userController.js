@@ -31,13 +31,17 @@ module.exports = {
                 userId: newUser.id,
               };
               // Save user 
-              userOrm.saveUser(newUser);
-
-              jwt.sign({ userId }, privateKey, { expiresIn: "2h" }, (error, token) => {
-                console.log("token is being created and sent");
-                res.json({
-                  token: token
-                });
+              userOrm.saveUser(newUser, (err, result) => {
+                if (err) {
+                  res.send(err);
+                } else if(result) {
+                  jwt.sign({ userId }, privateKey, { expiresIn: "2h" }, (error, token) => {
+                    console.log("token is being created and sent");
+                    res.json({
+                      token: token
+                    });
+                  });
+                }
               });
               
             };
