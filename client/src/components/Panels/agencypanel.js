@@ -52,7 +52,11 @@ const ExpansionPanelDetails = withStyles(theme => ({
 }))(MuiExpansionPanelDetails);
 
 export default function CustomizedExpansionPanels(props) {
+<<<<<<< HEAD
   
+=======
+  // console.log(props);
+>>>>>>> e64c55e0765d06865333a2ca5bd2bf59081e9ee1
   const [expanded, setExpanded] = React.useState('panel1');
 
   const handleChange = panel => (event, newExpanded) => {
@@ -67,8 +71,15 @@ export default function CustomizedExpansionPanels(props) {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Typography>
-            Below is your agency's current inventory.
-            <AgencyInventory />
+            The inventory table provides all of the current inventory your agency has available to assist the homeless population in your area to:
+          <br /><br />
+            <ul>
+              <li><strong>Add</strong> a new item click the "+" icon and include the necessary information in the line that appears in the table.</li>
+              <li><strong>Edit</strong> an existing item (i.e. edit quantity, or change information) select the "pencil" icon, make the necessary<br />
+                changes, and select the "checkmark icon" to confirm your changes.</li>
+              <li><strong>Delete</strong> an item that is no longer needed select the "trash" icon to delete the row.</li>
+            </ul>
+            <AgencyInventory data={props.supply} />
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>
@@ -90,21 +101,11 @@ export default function CustomizedExpansionPanels(props) {
         <ExpansionPanelDetails>
           <Typography>
             Below is a wishlist of items your agency needs assistance with. Community members and volunteers will be able to view the items on this list to determine if they are able to provide assistance to your agency.
-            <WishList />
+            <WishList data={props.request}/>
           </Typography>
         </ExpansionPanelDetails>
       </ExpansionPanel>
-      <ExpansionPanel square expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
-        <ExpansionPanelSummary aria-controls="panel4d-content" id="panel4d-header">
-          <Typography>Pending Donations</Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <Typography>
-            Below is a list of pending donations form the community. Please contact the donator to arrange confirm the items are still needed, and make arrangements to obtain the item or items.
-            <PendingDonations />
-          </Typography>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+
     </div>
   );
 }

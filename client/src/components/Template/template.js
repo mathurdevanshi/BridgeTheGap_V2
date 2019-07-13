@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 // import NavBar from "../Nav/nav";
-import "./template.css";
+// import "./template.css";
 
 
 

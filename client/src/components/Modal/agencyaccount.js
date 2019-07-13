@@ -1,11 +1,10 @@
-import React from 'react';
+import React from "react";
 import API from "../../utils/API";
-// import { Link as RouterLink } from 'react-router-dom';
-// import ReactDOM from 'react-dom';
-import 'antd/dist/antd.css';
-import '../MainPage/main.css'
-import '../../index.css';
-import { Button, Modal, Form, Input, Select } from 'antd';
+import { Redirect } from "react-router";
+import "antd/dist/antd.css";
+import "../MainPage/main.css";
+import "../../index.css";
+import { Button, Modal, Form, Input, Select } from "antd";
 
 const { Option } = Select;
 
@@ -13,15 +12,16 @@ function handleChange(value) {
   console.log(`selected ${value}`);
 }
 
-const AgencyAccountForm = Form.create({ name: 'form_in_modal' })(
+const AgencyAccountForm = Form.create({ name: "form_in_modal" })(
   // eslint-disable-next-line
 
   class extends React.Component {
     render() {
       const { visible, onCancel, onCreate, form } = this.props;
       const { getFieldDecorator } = form;
+
       return (
-        <Modal 
+        <Modal
           visible={visible}
           title="Create Account - Agency"
           okText="Submit"
@@ -30,108 +30,108 @@ const AgencyAccountForm = Form.create({ name: 'form_in_modal' })(
         >
           <Form layout="vertical">
             <Form.Item label="Name">
-              {getFieldDecorator('name', {
-                rules: [{ required: true, message: 'Please enter your full name.' }],
+              {getFieldDecorator("name", {
+                rules: [
+                  { required: true, message: "Please enter your full name." }
+                ]
               })(<Input />)}
             </Form.Item>
             <Form.Item label="Email">
-              {getFieldDecorator('email', {
-                rules: [{ required: false, message: 'Please enter a valid email address.' }],
+              {getFieldDecorator("email", {
+                rules: [
+                  {
+                    required: false,
+                    message: "Please enter a valid email address."
+                  }
+                ]
               })(<Input />)}
             </Form.Item>
             <Form.Item label="Phone Number">
-              {getFieldDecorator('phoneNumber')(<Input type="textarea" />)}
+              {getFieldDecorator("phoneNumber")(<Input type="textarea" />)}
             </Form.Item>
             <Form.Item label="Street Address">
-              {getFieldDecorator('address')(<Input type="textarea" />)}
+              {getFieldDecorator("address")(<Input type="textarea" />)}
             </Form.Item>
             <Form.Item label="City">
-              {getFieldDecorator('city')(<Input type="textarea" />)}
+              {getFieldDecorator("city")(<Input type="textarea" />)}
             </Form.Item>
             <Form layout="inline">
               <Form.Item label="State">
-                <div>{getFieldDecorator("state")(
-                  /* 
+                <div>
+                  {getFieldDecorator("state")(
+                    /* 
                     "defaultValue" does not work and was not sending state as a value
                     I added another "getFielDecorator" on line 52
                   */
-                  <Select defaultValue="california" style={{ width: 111 }} onChange={handleChange}>
-                    <Option value="alabama">AL</Option>
-                    <Option value="alaska">AK</Option>
-                    <Option value="arizona">AZ</Option>
-                    <Option value="arkansas">AR</Option>
-                    <Option value="california">CA</Option>
-                    <Option value="colorado">CO</Option>
-                    <Option value="connecticut">CT</Option>
-                    <Option value="delaware">DE</Option>
-                    <Option value="florida">FL</Option>
-                    <Option value="georgia">GA</Option>
-                    <Option value="hawaii">HI</Option>
-                    <Option value="idaho">ID</Option>
-                    <Option value="illinois">IL</Option>
-                    <Option value="indiana">IN</Option>
-                    <Option value="iowa">IA</Option>
-                    <Option value="kansas">KS</Option>
-                    <Option value="kentucky">KY</Option>
-                    <Option value="louisiana">LA</Option>
-                    <Option value="maine">ME</Option>
-                    <Option value="maryland">MD</Option>
-                    <Option value="massachussetts">MA</Option>
-                    <Option value="michigan">MI</Option>
-                    <Option value="minnesota">MN</Option>
-                    <Option value="mississippi">MS</Option>
-                    <Option value="Missouri">MO</Option>
-                    <Option value="montana">MT</Option>
-                    <Option value="nebraska">NE</Option>
-                    <Option value="nevada">NV</Option>
-                    <Option value="newhampshire">NH</Option>
-                    <Option value="newjersey">NJ</Option>
-                    <Option value="newmexico">NM</Option>
-                    <Option value="newyork">NY</Option>
-                    <Option value="northcarolina">NC</Option>
-                    <Option value="northdakota">ND</Option>
-                    <Option value="ohio">OH</Option>
-                    <Option value="oklahoma">OK</Option>
-                    <Option value="oregon">OR</Option>
-                    <Option value="pennsylvania">PA</Option>
-                    <Option value="rhodeisland">RI</Option>
-                    <Option value="southcarolina">SC</Option>
-                    <Option value="southdakota">SD</Option>
-                    <Option value="tennessee">TN</Option>
-                    <Option value="texas">TX</Option>
-                    <Option value="utah">UT</Option>
-                    <Option value="vermont">VT</Option>
-                    <Option value="virginia">VA</Option>
-                    <Option value="washington">WA</Option>
-                    <Option value="westvirgina">WV</Option>
-                    <Option value="wisconsin">WI</Option>
-                    <Option value="wyoming">WY</Option>
-                  </Select>
-
-                )}
+                    <Select
+                      defaultValue="california"
+                      style={{ width: 111 }}
+                      onChange={handleChange}
+                    >
+                      <Option value="alabama">AL</Option>
+                      <Option value="alaska">AK</Option>
+                      <Option value="arizona">AZ</Option>
+                      <Option value="arkansas">AR</Option>
+                      <Option value="california">CA</Option>
+                      <Option value="colorado">CO</Option>
+                      <Option value="connecticut">CT</Option>
+                      <Option value="delaware">DE</Option>
+                      <Option value="florida">FL</Option>
+                      <Option value="georgia">GA</Option>
+                      <Option value="hawaii">HI</Option>
+                      <Option value="idaho">ID</Option>
+                      <Option value="illinois">IL</Option>
+                      <Option value="indiana">IN</Option>
+                      <Option value="iowa">IA</Option>
+                      <Option value="kansas">KS</Option>
+                      <Option value="kentucky">KY</Option>
+                      <Option value="louisiana">LA</Option>
+                      <Option value="maine">ME</Option>
+                      <Option value="maryland">MD</Option>
+                      <Option value="massachussetts">MA</Option>
+                      <Option value="michigan">MI</Option>
+                      <Option value="minnesota">MN</Option>
+                      <Option value="mississippi">MS</Option>
+                      <Option value="Missouri">MO</Option>
+                      <Option value="montana">MT</Option>
+                      <Option value="nebraska">NE</Option>
+                      <Option value="nevada">NV</Option>
+                      <Option value="newhampshire">NH</Option>
+                      <Option value="newjersey">NJ</Option>
+                      <Option value="newmexico">NM</Option>
+                      <Option value="newyork">NY</Option>
+                      <Option value="northcarolina">NC</Option>
+                      <Option value="northdakota">ND</Option>
+                      <Option value="ohio">OH</Option>
+                      <Option value="oklahoma">OK</Option>
+                      <Option value="oregon">OR</Option>
+                      <Option value="pennsylvania">PA</Option>
+                      <Option value="rhodeisland">RI</Option>
+                      <Option value="southcarolina">SC</Option>
+                      <Option value="southdakota">SD</Option>
+                      <Option value="tennessee">TN</Option>
+                      <Option value="texas">TX</Option>
+                      <Option value="utah">UT</Option>
+                      <Option value="vermont">VT</Option>
+                      <Option value="virginia">VA</Option>
+                      <Option value="washington">WA</Option>
+                      <Option value="westvirgina">WV</Option>
+                      <Option value="wisconsin">WI</Option>
+                      <Option value="wyoming">WY</Option>
+                    </Select>
+                  )}
                 </div>
               </Form.Item>
-              <Form.Item label="Zip Code" >
-                {getFieldDecorator('zip')(<Input type="textarea" />)}
+              <Form.Item label="Zip Code">
+                {getFieldDecorator("zip")(<Input type="textarea" />)}
               </Form.Item>
             </Form>
-            {/* <Form.Item label="Address">
-              {getFieldDecorator('address')(<Input type="textarea" />)}
-            </Form.Item>
-            <Form.Item label="City">
-              {getFieldDecorator('city')(<Input type="textarea" />)}
-            </Form.Item>
-            <Form.Item label="State">
-              {getFieldDecorator('state')(<Input type="textarea" />)}
-            </Form.Item>
-            <Form.Item label="Zip Code">
-              {getFieldDecorator('zip')(<Input type="textarea" />)}
-            </Form.Item> */}
+
             <Form.Item label="Username">
-              {getFieldDecorator('username')(<Input type="textarea" />)}
+              {getFieldDecorator("username")(<Input type="textarea" />)}
             </Form.Item>
             <Form.Item label="Password">
-              {getFieldDecorator('password')(<Input type="textarea" />)}
+              {getFieldDecorator("password")(<Input type="textarea" />)}
             </Form.Item>
             {/* <Form.Item className="collection-create-form_last-form-item">
               {getFieldDecorator('modifier', {
@@ -147,12 +147,13 @@ const AgencyAccountForm = Form.create({ name: 'form_in_modal' })(
         </Modal>
       );
     }
-  },
+  }
 );
 
 class ModalTemplate extends React.Component {
   state = {
     visible: false,
+    redirect: false
   };
 
   showModal = () => {
@@ -170,23 +171,25 @@ class ModalTemplate extends React.Component {
         return;
       }
       values.category = "agency";
-      
-      console.log('Received values of form: ', values);
+
+      console.log("Received values of form: ", values);
       form.resetFields();
       this.setState({ visible: false });
-      
+
       // API call to register user in our database
       API.registerUser(values)
-      .then((res) => {
-        console.log("api called was successful!");
-        let token = res.data.token;
-        localStorage.setItem("jwt", token);
+        .then(res => {
+          console.log("api called was successful!");
+          let token = res.data.token;
+          localStorage.setItem("jwt", token);
 
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
+          this.setState({
+            redirect: true
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
     });
   };
 
@@ -195,6 +198,11 @@ class ModalTemplate extends React.Component {
   };
 
   render() {
+    let redirect = this.state.redirect;
+
+    if (redirect) {
+      return <Redirect to="/agencyhome" />;
+    }
     return (
       <div>
         <Button type="primary" onClick={this.showModal}>

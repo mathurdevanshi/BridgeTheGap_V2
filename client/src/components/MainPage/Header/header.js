@@ -8,7 +8,7 @@ class Header extends Component {
     return (
       <div>
         <h1 id="home-heading">Bridge the Gap</h1>
-        <h3 id="slogan"><i>Creating connections for individuals directly affected by homelessness <br></br>and those at risk</i></h3>
+        <h3 id="slogan" style={{ color: "#1ebba3" }}><strong><i>Creating connections for individuals directly affected by homelessness <br></br>and those at risk</i></strong></h3>
       </div>
 
     );

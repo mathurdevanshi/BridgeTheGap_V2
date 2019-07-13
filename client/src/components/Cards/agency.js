@@ -1,6 +1,4 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -12,8 +10,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import hope from "../../images/hope.jpg";
 import ModalTemplate from "../Modal/agencyaccount";
-// import LoginForm from "../Modal/login";
 import '../MainPage/main.css'
+import LoginModal from "../Modal/login";
 
 const useStyles = makeStyles({
   card: {
@@ -54,9 +52,7 @@ export default function AgencyCard() {
             </Link> */}
           </Button>
           <Button size="small" color="primary">
-            <Link component={RouterLink} to="/agencyhome">
-              Learn More
-            </Link>
+            <LoginModal redirectLink="/agencyhome" />
           </Button>
         </CardActions>
       </Card>

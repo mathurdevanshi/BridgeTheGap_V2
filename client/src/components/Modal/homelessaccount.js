@@ -1,7 +1,6 @@
 import React from 'react';
 import API from "../../utils/API";
-// import { Link as RouterLink } from 'react-router-dom';
-// import ReactDOM from 'react-dom';
+import {Redirect} from "react-router";
 import 'antd/dist/antd.css';
 import '../MainPage/main.css'
 import '../../index.css';
@@ -144,6 +143,7 @@ const HomelessAccountForm = Form.create({ name: 'form_in_modal' })(
 class ModalTemplate extends React.Component {
   state = {
     visible: false,
+    redirect: false,
   };
 
   showModal = () => {
@@ -167,17 +167,9 @@ class ModalTemplate extends React.Component {
       this.setState({ visible: false });
 
       // API call to register user in our database
-      API.registerClient(values)
-      .then((res) => {
-        console.log("api called was successful!");
-        // let token = res.data.token;
-        // localStorage.setItem("jwt", JSON.stringify(token));
-
-      })
-      .catch((err) => {
-        console.log(err);
+      this.setState({
+        redirect: true
       });
-
     });
   };
 
@@ -186,19 +178,25 @@ class ModalTemplate extends React.Component {
   };
 
   render() {
-    return (
-      <div>
-        <Button type="primary" onClick={this.showModal}>
-          Create Account
-        </Button>
-        <HomelessAccountForm
-          wrappedComponentRef={this.saveFormRef}
-          visible={this.state.visible}
-          onCancel={this.handleCancel}
-          onCreate={this.handleCreate}
-        />
-      </div>
-    );
+    let redirect = this.state.redirect; 
+
+    if (redirect) {
+      return <Redirect to="/homelesshome" />
+    } else {
+      return (
+        <div>
+          <Button type="primary" onClick={this.showModal}>
+            Create Account
+          </Button>
+          <HomelessAccountForm
+            wrappedComponentRef={this.saveFormRef}
+            visible={this.state.visible}
+            onCancel={this.handleCancel}
+            onCreate={this.handleCreate}
+          />
+        </div>
+      );
+    }
   }
 }
 

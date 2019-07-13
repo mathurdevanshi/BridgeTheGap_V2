@@ -1,51 +1,49 @@
-import React from 'react';
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AgencyPanel from "../Panels/agencypanel";
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import { makeStyles } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import List from "@material-ui/core/List";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 import { Link } from "react-router-dom";
-import { red, blueGrey, teal } from '@material-ui/core/colors';
-import SvgIcon from '@material-ui/core/SvgIcon';
-import API from '../../utils/API';
-
+import { red, blueGrey, teal } from "@material-ui/core/colors";
+import SvgIcon from "@material-ui/core/SvgIcon";
+import API from "../../utils/API";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
+    display: "flex"
   },
   appBar: {
     width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
+    marginLeft: drawerWidth
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0,
+    flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: drawerWidth
   },
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(3),
+    padding: theme.spacing(3)
   },
   iconHover: {
     margin: theme.spacing(2),
-    '&:hover': {
-      color: red[800],
-    },
-  },
-
+    "&:hover": {
+      color: red[800]
+    }
+  }
 }));
 
 function HomeIcon(props) {
@@ -56,53 +54,76 @@ function HomeIcon(props) {
   );
 }
 
-
-class AgencyComponent extends React.Component{
-  
+class AgencyComponent extends React.Component {
   state = {
-    classes : useStyles,
-    authorized : false,
-    agencyData : undefined,
-
-  }
+    classes: useStyles,
+    authorized: false,
+    supplyData: undefined,
+    requestData: undefined
+  };
 
   componentDidMount() {
     let token = localStorage.getItem("jwt");
 
-    let tokenObject =  {
+    let tokenObject = {
       authorized: token
     };
 
-    console.log(token);
-
     API.checkUsersToken(tokenObject)
-    .then((res) => {
-      console.log(res);
-      this.setState(res);
-      console.log("agency data" ,this.state.agencyData);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+      .then(res => {
+        let data = res.data;
+        let supplyArray = [];
+        let requestArray = [];
+
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].requestOrSupply === "supply") {
+            let supplyObject = {
+              category: data[i].category,
+              descriptionOfItem: data[i].descriptionOfItem,
+              currentQuantity: data[i].currentQuantity
+            };
+            supplyArray.push(supplyObject);
+          } else if (data[i].requestOrSupply === "request") {
+            let requestObject = {
+              category: data[i].category,
+              descriptionOfItem: data[i].descriptionOfItem,
+              currentQuantity: data[i].currentQuantity
+            };
+            requestArray.push(requestObject);
+          }
+        }
+        // console.log("supply array" , supplyArray);
+        // console.log("request array", requestArray);
+
+        this.setState({
+          requestData: requestArray,
+          supplyData: supplyArray
+        });
+
+        // console.log("request data" , this.state.requestData);
+        // console.log("supply data", this.state.supplyData);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   render() {
     return (
-    
-      <div className={this.state.classes.root} style={{ opacity: .90 }} >
+      <div className={this.state.classes.root} style={{ opacity: 0.9 }}>
         <CssBaseline />
         <Drawer
           className={this.state.classes.drawer}
           variant="permanent"
           classes={{
-            paper: this.state.classes.drawerPaper,
+            paper: this.state.classes.drawerPaper
           }}
           anchor="left"
         >
           <div className={this.state.classes.toolbar} />
           <Divider />
-          <List  >
-            {['Home'].map((text) => (
+          <List>
+            {["Home"].map(text => (
               <ListItem button key={text} component={Link} to="/">
                 <ListItemIcon>
                   <HomeIcon
@@ -119,45 +140,37 @@ class AgencyComponent extends React.Component{
                             </linearGradient>
                           </defs>
                           {React.cloneElement(svgProps.children[0], {
-                            fill: 'url(#gradient1)',
+                            fill: "url(#gradient1)"
                           })}
                         </svg>
                       );
                     }}
                   />
-                  {/* <InboxIcon /> */}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
             ))}
           </List>
           <Divider />
-        <ListItem button component={Link} to="/design"></ListItem>
+          <ListItem button component={Link} to="/design" />
         </Drawer>
-        <main className={this.state.classes.content} >
+        <main className={this.state.classes.content}>
           <div className={this.state.classes.toolbar} />
           <Typography paragraph className="col-md-12">
             <h1>Agency Home</h1>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-            ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-            facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-            gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-            donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-            adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-            Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-            imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-            arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-            donec massa sapien faucibus et molestie ac.
-        </Typography>
-          <AgencyPanel />
+            <p style={{ textAlign: "justify" }}>
+              Welcome to the Bridge the Gap Agency Home Page! Below you will
+              find an overview of your agency's inventory, claimed items, and
+              current wish list. Click on each panel for more information.
+            </p>
+          </Typography>
+          <AgencyPanel
+            supply={this.state.supplyData}
+            request={this.state.requestData}
+          />
         </main>
       </div>
-    // </Template>
-  );
+    );
   }
- 
 }
-// export default function PermanentDrawerLeft() {
-
-// }
 export default AgencyComponent;

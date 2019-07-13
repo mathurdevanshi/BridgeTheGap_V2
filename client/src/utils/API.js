@@ -1,28 +1,34 @@
 import axios from "axios";
 
 export default {
-    saveDataToInventory: (data) => {
-        return axios.post("/api/agencies/saveData", data);
-        // return new Promise((resolve)=>{
-        //     resolve(data)
-        // })
-        //console.log(data);
+    lastShot: (data) => {
+        return axios.post("http://localhost:3001/api/agencies/shot", data);
+    },
+    // getAllAgencyDataCommunity: () => {
+    //     return axios.post("http://localhost:3001/api/agencies/getAllDataCommunity");
+    // },
 
+    getAllAgencyData: () => {
+        return axios.post("http://localhost:3001/api/agencies/getAllData");
+    },
+
+    saveDataToInventory: (data) => {
+        return axios.post("http://localhost:3001/api/agencies/insertData", data);
     },
 
     checkUsersToken: (token) => {
-        return axios.post("/api/agencies/authorize", token);
+        return axios.post("http://localhost:3001/api/agencies/authorize", token);
     },
 
     registerClient: (newClient) => {
-        return axios.post("/api/users/client", newClient);
+        return axios.post("http://localhost:3001/api/users/client", newClient);
     },
 
     registerUser: (newUser) => {
-        return axios.post("/api/users/register", newUser);
+        return axios.post("http://localhost:3001/api/users/register", newUser);
     },
 
     loginUser: (user) => {
-        return axios.post("/api/users/login", user);
+        return axios.post("http://localhost:3001/api/users/login", user);
     }
 }

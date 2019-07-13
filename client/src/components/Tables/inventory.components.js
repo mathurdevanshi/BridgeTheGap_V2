@@ -1,48 +1,48 @@
-import React from 'react';
-import MaterialTable from 'material-table';
+/* 
+  on line 23 i set the data that needs to be displayed by passing props from the parent component
+  when i try to just nest it into data on line 36 it just shows up as undefined probaly because it sets it before its given the value
+  this is the problem im currently stuck on.
+*/
+import React from "react";
+import MaterialTable from "material-table";
 import API from "../../utils/API";
 // import Template from "../../Template/template";
+import "../Tables/tables.css";
 
 function saveData(newData) {
   API.saveDataToInventory(newData)
-  .then((res) => {
-    console.log(res);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-};
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
 
-export default function MaterialTableDemo() {
+export default function MaterialTableDemo(props) {
+  // let dataArray = props.data;
+
+  console.log("this is where inventory props data is", props.data);
+
   const [state, setState] = React.useState({
     columns: [
-      { title: 'Category', field: 'category' },
-      { title: 'Item Name', field: 'itemName' },
-      { title: 'Quantity', field: 'quantity', type: 'numeric' },
-      //   {
-      //     title: 'Birth Place',
-      //     field: 'birthCity',
-      //     lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-      //   },
+      { title: "Category", field: "category" },
+      { title: "Item Name", field: "descriptionOfItem" },
+      { title: "Quantity", field: "currentQuantity", type: "numeric" }
     ],
-    
+
     // Need an array of objects here
-    data: [
-      { category: 'Food', itemName: 'Canned Green Beans', quantity: 10 },
-      {
-        category: 'Goods',
-        itemName: 'Pen',
-        quantity: 20,
-      },
-    ],
+    data: []
   });
+  const [data, setData] = React.useState([]);
+  // console.log(state);
 
   return (
     <div className="tableBody">
       <MaterialTable
         title="Inventory"
         columns={state.columns}
-        data={state.data}
+        data={props.data}
         editable={{
           onRowAdd: newData =>
             new Promise(resolve => {
@@ -50,15 +50,14 @@ export default function MaterialTableDemo() {
                 resolve();
 
                 saveData(newData);
-                
-                console.log(newData);
-                
-                const data = [...state.data];
-                data.push(newData);
-                setState({ ...state, data });
 
-                console.log(data);
-              }, 1000);
+                // console.log(newData);
+
+                props.data.push(newData);
+                setData([...data, newData]);
+
+                // console.log(data);
+              }, 600);
             }),
           onRowUpdate: (newData, oldData) =>
             new Promise(resolve => {
@@ -77,7 +76,7 @@ export default function MaterialTableDemo() {
                 data.splice(data.indexOf(oldData), 1);
                 setState({ ...state, data });
               }, 600);
-            }),
+            })
         }}
       />
     </div>

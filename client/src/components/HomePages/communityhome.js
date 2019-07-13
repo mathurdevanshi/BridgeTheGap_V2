@@ -1,23 +1,18 @@
 import React from 'react';
-import Template from "../Template/template";
-import CommunityPanel from "../Panels/communitypanel";
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
-// import AppBar from '@material-ui/core/AppBar';
-// import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-// import InboxIcon from '@material-ui/icons/MoveToInbox';
-// import MailIcon from '@material-ui/icons/Mail';
 import { Link } from "react-router-dom";
 import { red, blueGrey, teal } from '@material-ui/core/colors';
 import SvgIcon from '@material-ui/core/SvgIcon';
-
+import AgencyNeeds from "../Tables/agencyneeds.components";
+import API from "../../utils/API";
 
 const drawerWidth = 240;
 
@@ -58,37 +53,67 @@ function HomeIcon(props) {
     </SvgIcon>
   );
 }
+class CommunityComponent extends React.Component {
+  state = {
+    classes : useStyles,
+    authorized : false,
+    agencyData : undefined
+  }
 
-export default function PermanentDrawerLeft() {
-  const classes = useStyles();
+  componentDidMount() {    
+    API.getAllAgencyData()
+    .then((res) => {
+      // console.log(res.data);
+      let data = res.data;
+      let agencyRequestArray=[];
 
-  return (
-    <Template>
-      <div className={classes.root} style={{ opacity: .90 }} >
+      for(let i = 0; i < data.length; i++) {
+        if (data[i].requestOrSupply === "request") {
+
+          let agencyRequestObject = {
+            name : data[i].name,
+            phoneNumber : data[i].phoneNumber,
+            category : data[i].category,
+            item : data[i].item,
+            quantity : data[i].quantity
+          };
+
+          agencyRequestArray.push(agencyRequestObject);;
+        }
+      }
+
+      console.log(agencyRequestArray);
+
+      this.setState({
+        agencyData : agencyRequestArray
+      });
+
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
+  render() {
+    return (
+      <div className={this.state.classes.root} style={{ opacity: .90 }} >
         <CssBaseline />
-        {/* <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h6" noWrap>
-              Permanent drawer
-          </Typography>
-          </Toolbar>
-        </AppBar> */}
         <Drawer
-          className={classes.drawer}
+          className={this.state.classes.drawer}
           variant="permanent"
           classes={{
-            paper: classes.drawerPaper,
+            paper: this.state.classes.drawerPaper,
           }}
           anchor="left"
         >
-          <div className={classes.toolbar} />
+          <div className={this.state.classes.toolbar} />
           <Divider />
           <List  >
             {['Home'].map((text) => (
               <ListItem button key={text} component={Link} to="/">
                 <ListItemIcon>
                   <HomeIcon
-                    className={classes.icon}
+                    className={this.state.classes.icon}
                     color="primary"
                     fontSize="large"
                     component={svgProps => {
@@ -114,40 +139,23 @@ export default function PermanentDrawerLeft() {
             ))}
           </List>
           <Divider />
-          {/* <ListItem button component={Link} to="/design"></ListItem> */}
-          {/* <List>
-            {['Claimed Items', 'Inventory', 'Pending Donations', 'Wishlist'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List> */}
         </Drawer>
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
+        <main className={this.state.classes.content}>
+          <div className={this.state.classes.toolbar} />
           <Typography paragraph>
-            <h1>Community Home</h1>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-            ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-            facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-            gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-            donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-            adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-            Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-            imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-            arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-            donec massa sapien faucibus et molestie ac.
-            <CommunityPanel />
+            <h1>Community Home Page</h1>
+            <p style={{ textAlign: "justify" }}>Welcome to the Bridge the Gap Community Home Page! Below you will find an overview of items that agency's in your area are in need of. When organizing your next classroom collection drive, or your family is looking to donate items, you can visit this page to see what items the agency's in your area need to help your local homeless population.</p>
+
+            <AgencyNeeds data={this.state.agencyData} />
           </Typography>
-          {/* <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-            facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-            tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-            consequat mauris. 
-        </Typography> */}
         </main>
       </div>
-    </Template>
   );
+  }
 }
+
+export default CommunityComponent;
+// export default function PermanentDrawerLeft() {
+//   const classes = useStyles();
+
+// }
