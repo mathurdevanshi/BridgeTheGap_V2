@@ -33,9 +33,9 @@ let ormObject = {
     },
 
     saveUser: (req, res) => {
-        let queryString= "INSERT INTO ";
         console.log(req);
-
+        
+        let queryString= "INSERT INTO agencyinformationdb ";
         queryString += "(id, fullName, accountType, email, phoneNumber, streetName, city, zipCode, stateName, username, userPassword) ";
         queryString +="VALUES (?,?,?,?,?,?,?,?,?,?,?);";
         
