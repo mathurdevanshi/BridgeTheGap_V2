@@ -33,9 +33,9 @@ let ormObject = {
     },
 
     saveUser: (req, callback) => {
-        console.log(req);
+        console.log();
         
-        let queryString= "INSERT INTO agencyinformationdb ";
+        let queryString= "INSERT INTO agencyInformationDB ";
         queryString += "(id, fullName, accountType, email, phoneNumber, streetName, city, zipCode, stateName, username, userPassword) ";
         queryString +="VALUES (?,?,?,?,?,?,?,?,?,?,?);";
         
@@ -61,7 +61,7 @@ let ormObject = {
     },
 
     findUser: (req, callback) => {
-        let queryString = "SELECT * FROM agencyinformationdb WHERE username = ?;"
+        let queryString = "SELECT * FROM agencyInformationDB WHERE username = ?;"
 
         connection.query(queryString, [req], function(err, result) {
             if (err) {
