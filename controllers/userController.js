@@ -36,7 +36,6 @@ module.exports = {
                   res.send(err);
                 } else if(result) {
                   jwt.sign({ userId }, privateKey, { expiresIn: "2h" }, (error, token) => {
-                    console.log("token is being created and sent");
                     res.json({
                       token: token
                     });
@@ -53,7 +52,6 @@ module.exports = {
   registerUser: function(req, res) {
     let newUser = req.body;
     newUser.id = parseInt(Math.random() * 10000000);
-    console.log(newUser);
 
     let saltRounds = 10;
     
@@ -76,7 +74,6 @@ module.exports = {
               userOrm.saveUser(newUser);
 
               jwt.sign({ userId }, privateKey, { expiresIn: "2h" }, (error, token) => {
-                console.log("token is being created and sent");
                 res.json({
                   token: token
                 });
@@ -94,31 +91,31 @@ module.exports = {
     let password = req.body.password;
 
     userOrm.findUser(username, (authUser) => {
-
-      bcrypt.compare(password, authUser[0].userPassword, function(err, samepasword) {        
-        if (err) {
-          console.log(err);
-        } else if (samepasword) {
-          console.log("User has been authorized");
-          console.log(authUser[0].id);
-
-          let userId = {
-            userId : authUser[0].id
-          };
-
-          jwt.sign({userId}, privateKey, { expiresIn: "2h" }, (error, token) => {
-            console.log("token is being created");
-
-            res.json({
-              token: token
-            });
-            
+        if (authUser.length === 1) {
+          console.log('user found');
+          bcrypt.compare(password, authUser[0].userPassword, function(err, samepasword) {        
+            if (err) {
+            } else if (samepasword) {    
+              let userId = {
+                userId : authUser[0].id
+              };
+    
+              jwt.sign({userId}, privateKey, { expiresIn: "2h" }, (error, token) => {
+    
+                res.json({
+                  token: token
+                });
+                
+              });
+              
+            } else {
+              console.log("Users creds don't match");
+            };
           });
-          
         } else {
-          console.log("Users creds don't match");
-        };
-      });
+          res.sendStatus(404);
+      };
+
     });
   }
 };

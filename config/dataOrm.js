@@ -52,7 +52,7 @@ let ormObject = {
     getAllAgencyData: (callback) => {
         // console.log("dataOrm is reached");
         let queryString = "SELECT * FROM agencyInformationDB ";
-        queryString += "LEFT JOIN agencyInventorymanagementDB ";
+        queryString += "LEFT JOIN agencyInventoryManagementDB ";
         queryString += "ON agencyInformationDB.id = agencyInventoryManagementDB.id;";
         
         connection.query(queryString, (err, result) => {

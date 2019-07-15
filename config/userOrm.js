@@ -32,7 +32,7 @@ let ormObject = {
         )
     },
 
-    saveUser: (req, callback) => {
+    saveUser: (req) => {
         console.log();
         
         let queryString= "INSERT INTO agencyInformationDB ";
@@ -51,11 +51,15 @@ let ormObject = {
               req.zip,
               req.state,
               req.username,
-              req.password
+              req.passwor
             ], 
             
             function(err, result) {
-                callback(err, result);
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(result); 
+                }
             }
         );
     },
@@ -64,11 +68,7 @@ let ormObject = {
         let queryString = "SELECT * FROM agencyInformationDB WHERE username = ?;"
 
         connection.query(queryString, [req], function(err, result) {
-            if (err) {
-                console.log(err);
-            }   else {
-                callback(result);
-            }
+            callback(result);
 
         })
     }
