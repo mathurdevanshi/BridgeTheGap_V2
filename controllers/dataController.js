@@ -82,7 +82,7 @@ module.exports = {
 
             for (let i = 0; i < result.length; i++) {
                 let dataObject = {
-                    name: result[i].username,
+                    name: result[i].fullName,
                     phoneNumber: result[i].phoneNumber,
                     category: result[i].category,
                     item: result[i].descriptionOfItem,

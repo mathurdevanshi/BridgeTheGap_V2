@@ -51,7 +51,7 @@ let ormObject = {
               req.zip,
               req.state,
               req.username,
-              req.passwor
+              req.password
             ], 
             
             function(err, result) {

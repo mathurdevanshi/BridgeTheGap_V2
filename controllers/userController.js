@@ -95,6 +95,7 @@ module.exports = {
           console.log('user found');
           bcrypt.compare(password, authUser[0].userPassword, function(err, samepasword) {        
             if (err) {
+              console.log(err);
             } else if (samepasword) {    
               let userId = {
                 userId : authUser[0].id
