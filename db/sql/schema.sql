@@ -18,7 +18,6 @@ CREATE TABLE agencyInformationDB(
 
 CREATE  TABLE agencyInventoryManagementDB(
     id int NOT NULL, 
-    fullName varchar (90), 
     agencyActionId int NOT NULL AUTO_INCREMENT, 
     actionCreatedAt datetime NOT NULL default CURRENT_TIMESTAMP, 
     requestOrSupply varchar (15), 

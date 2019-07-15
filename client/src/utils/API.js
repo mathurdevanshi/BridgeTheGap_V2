@@ -10,26 +10,26 @@ export default {
     // },
 
     getAllAgencyData: () => {
-        return axios.post("https://afternoon-sierra-25981.herokuapp.com/api/agencies/getAllData");
+        return axios.post("https://afternoon-sierra-25981.herokuapp.com/agencies/getAllData");
     },
 
     saveDataToInventory: (data) => {
-        return axios.post("https://afternoon-sierra-25981.herokuapp.com/api/agencies/insertData", data);
+        return axios.post("https://afternoon-sierra-25981.herokuapp.com/agencies/insertData", data);
     },
 
     checkUsersToken: (token) => {
-        return axios.post("https://afternoon-sierra-25981.herokuapp.com/api/agencies/authorize", token);
+        return axios.post("https://afternoon-sierra-25981.herokuapp.com/agencies/authorize", token);
     },
 
     registerClient: (newClient) => {
-        return axios.post("https://afternoon-sierra-25981.herokuapp.com/api/users/client", newClient);
+        return axios.post("https://afternoon-sierra-25981.herokuapp.com/users/client", newClient);
     },
 
     registerUser: (newUser) => {
-        return axios.post("https://afternoon-sierra-25981.herokuapp.com/api/users/register", newUser);
+        return axios.post("https://afternoon-sierra-25981.herokuapp.com/users/register", newUser);
     },
 
     loginUser: (user) => {
-        return axios.post("https://afternoon-sierra-25981.herokuapp.com/api/users/login", user);
+        return axios.post("https://afternoon-sierra-25981.herokuapp.com/users/login", user);
     }
 }
